@@ -1,7 +1,7 @@
 /**
  * Created by sanya on 16.02.2016.
  */
-window.addEventListener("load", function() {
+function algo1() {
 	var tBody = document.getElementsByClassName('tableBody')[0];
 	var numOfGarbageBlock = document.getElementById('numOfGarbage');
 
@@ -22,7 +22,7 @@ window.addEventListener("load", function() {
 	catch(ex) {
 		console.log(ex);
 	}
-
+	tBody.insertAdjacentHTML('afterBegin', '<div id="cleaner" class="cleaner" width="66"> <img src="content/images/aspirator_64.png" alt="" width="100%" height="100%"> </div>');
 
 	var musors = document.getElementsByClassName('musor');
 	numOfGarbageBlock.innerHTML = musors.length;
@@ -100,29 +100,7 @@ window.addEventListener("load", function() {
 						//moveLeft();
 						moveUp();
 					}
-					//if(cleaner.getBoundingClientRect().top+1 == tableBody.getBoundingClientRect().top) {
-					//	//clearInterval(move);
-					//	//moveLeft();
-					//	var parent = tableCells[i].parentNode;
-					//	var isGarb;
-					//	for (var j = 0; j < parent.children.length; j++) {
-					//		if(parent.children[j].children[0]) {
-					//			isGarb = true;
-					//			break;
-					//		}
-					//		else {
-					//			isGarb = false;
-					//		}
-					//	}
-					//	if (isGarb) {
-					//		clearInterval(move);
-					//		moveLeft();
-					//	}
-					//	else {
-					//		clearInterval(move);
-					//		moveRight();
-					//	}
-					//}
+
 				}
 			}
 		}, speed);
@@ -133,7 +111,8 @@ window.addEventListener("load", function() {
 			cleaner.style.left = left+'px';
 			for (var i = tableCells.length-1; i>=0; --i ) {
 				if ((cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1)
-						&&(cleaner.getBoundingClientRect().top+1 == tableCells[i].getBoundingClientRect().top)) {
+						&&((cleaner.getBoundingClientRect().top+1 == tableCells[i].getBoundingClientRect().top)
+						||(cleaner.getBoundingClientRect().top+2 == tableCells[i].getBoundingClientRect().top))) {
 					tableCells[i].setAttribute("clean", "");
 					tableCells[i].innerHTML = "";
 					numOfGarbageBlock.innerHTML = musors.length;
@@ -174,7 +153,7 @@ window.addEventListener("load", function() {
 					try {
 						if (tableCells[i].previousElementSibling.classList.contains('wallCell1')) {
 							if (top % 66 == 0)
-							clearInterval(move);
+								clearInterval(move);
 							moveRight();
 						}
 					}
@@ -206,28 +185,6 @@ window.addEventListener("load", function() {
 					tableCells[i].innerHTML = "";
 					numOfGarbageBlock.innerHTML = musors.length;
 					if (musors.length == 0) Finish();
-
-					//for(var i = 0; i < 19; i++) {
-					//	if (tableCells[i].parentNode.children[i].children) {
-					//		console.log("children!!!!");
-					//	}
-					//}
-					//if(cleaner.getBoundingClientRect().top+1 == tableBody.getBoundingClientRect().top) {
-					//	var cellParent = tableCells[i].parentNode.children;
-					//	console.log(cellParent);
-					//	//for (var i = 0; i < cellParent.length; ++i) {
-					//	//	console.log(cellParent[i]);
-					//	//}
-					//	//for(var i = 0; i < 19; i++) {
-					//	//	console.log(cell.parentNode.children[i].children);
-					//	//	//if (tableCells[i].parentNode.children[i].children) {
-					//	//	//	console.log("children!!!!");
-					//	//	//}
-					//	//}
-					//}
-
-
-
 				}
 			}
 			if(cleaner.getBoundingClientRect().top+1 == tableBody.getBoundingClientRect().top) {
@@ -235,11 +192,6 @@ window.addEventListener("load", function() {
 				moveLeft();
 			}
 
-
-			//if(top%66 == 0) {
-			//	clearInterval(move);
-			//	moveRight();
-			//}
 		}, speed);
 	}
 
@@ -262,6 +214,8 @@ window.addEventListener("load", function() {
 	btnRetry.addEventListener('click', function() {
 		window.location.reload();
 	});
+}
+
 
 
 
@@ -388,7 +342,6 @@ window.addEventListener("load", function() {
 	}
 */
 
-});
 
 
 
