@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="content/css/external/reset.css">
+
+    <link rel="stylesheet" href="content/css/style.css">
+    <script src="content/js/move.js"></script>
+    <script src="content/js/script.js"></script>
+
+</head>
+<body>
+  <header class="header">
+      <h1>Vacuum cleaner</h1>
+      <div class="buttons">
+          <button class="btn btn-primary btn-start">Start</button>
+          <button class="btn btn-warning btn-stop">Pause</button>
+          <button class="btn btn-danger btn-retry">Retry</button>
+      </div>
+      <div class="info">
+          <span class="alert alert-info">Number of garbage: <span id="numOfGarbage"></span></span>
+      </div>
+      <div class="alert alert-success finish"> Your room is completely clean</div>
+  </header>
+  <div class="environment">
+
+      <section>
+          <table>
+              <tbody class="tableBody">
+              <div id="cleaner" class="cleaner" width="66">
+                  <img src="content/images/aspirator_64.png" alt="" width="100%" height="100%">
+              </div>
+                <tr class="tableRow">
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="wallCell1"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                </tr>
+                <tr class="tableRow">
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="wallCell1"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="wallCell3"></td>
+                    <td class="tableCell"></td>
+                </tr>
+                <tr class="tableRow">
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="wallCell1"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="wallCell3"></td>
+                    <td class="tableCell"></td>
+                </tr>
+                <tr class="tableRow">
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="wallCell1"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="wallCell3"></td>
+                    <td class="tableCell"></td>
+                </tr>
+                <tr class="tableRow">
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="wallCell1 wallCell2"></td>
+                    <td class="wallCell2"></td>
+                    <td class="wallCell2"></td>
+                    <td class="wallCell2"></td>
+                    <td class="wallCell2"></td>
+                    <td class="wallCell2"></td>
+                    <td class="wallCell2"></td>
+                    <td class="wallCell2"></td>
+                    <td class="wallCell2"></td>
+                    <td class="wallCell2"></td>
+                    <td class="wallCell2"></td>
+                    <td class="wallCell2"></td>
+                    <td class="wallCell2"></td>
+                    <td class="wallCell2"></td>
+                    <td class="tableCell"></td>
+                </tr>
+                <tr class="tableRow">
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                </tr>
+                <tr class="tableRow">
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                    <td class="tableCell"></td>
+                </tr>
+              </tbody>
+          </table>
+      </section>
+
+          <!--<div id="cleaner" class="cleaner">
+              <img src="content/images/aspirator_64.png" alt="" width="55" >
+          </div>
+          <div class="garbage">
+              <img src="content/images/garbage.png" alt="" width="30">
+          </div>-->
+  </div>
+</body>
+</html>
