@@ -2,8 +2,14 @@
  * Created by sanya on 16.02.2016.
  */
 function algo1() {
+	var startTime = new Date();
+	var startMsec = startTime.getMilliseconds();
+	//startTime.setTime(5000000);
+
+
 	var tBody = document.getElementsByClassName('tableBody')[0];
 	var numOfGarbageBlock = document.getElementById('numOfGarbage');
+	var numOfStepsBlock = document.getElementById('numOfSteps');
 
 	console.log(tBody);
 
@@ -25,7 +31,9 @@ function algo1() {
 	tBody.insertAdjacentHTML('afterBegin', '<div id="cleaner" class="cleaner" width="66"> <img src="content/images/aspirator_64.png" alt="" width="100%" height="100%"> </div>');
 
 	var musors = document.getElementsByClassName('musor');
+	var steps = 0;
 	numOfGarbageBlock.innerHTML = musors.length;
+	numOfStepsBlock.innerHTML = steps;
 
 
 	var cleaner = document.getElementsByClassName('cleaner')[0];
@@ -56,7 +64,11 @@ function algo1() {
 					tableCells[i].setAttribute("clean", "");
 					tableCells[i].innerHTML = "";
 					numOfGarbageBlock.innerHTML = musors.length;
+					if ((left % 66 == 0) || (left % 67 == 0) && !((left % 66 == 0) && (left % 67 == 0))) {
+						numOfStepsBlock.innerHTML = steps++;
+					}
 					if (musors.length == 0) Finish();
+
 
 					try {
 						if (tableCells[i].nextElementSibling.classList.contains('wallCell1')) {
@@ -117,7 +129,9 @@ function algo1() {
 					tableCells[i].innerHTML = "";
 					numOfGarbageBlock.innerHTML = musors.length;
 					if (musors.length == 0) Finish();
-
+					if ((left % 66 == 0) || (left % 67 == 0) && !((left % 66 == 0) && (left % 67 == 0))) {
+						numOfStepsBlock.innerHTML = steps++;
+					}
 					try {
 						if (tableCells[i].previousElementSibling.classList.contains('wallCell1')) {
 							clearInterval(move);
@@ -149,7 +163,9 @@ function algo1() {
 					tableCells[i].innerHTML = "";
 					numOfGarbageBlock.innerHTML = musors.length;
 					if (musors.length == 0) Finish();
-
+					if (top % 66 == 0) {
+						numOfStepsBlock.innerHTML = steps++;
+					}
 					try {
 						if (tableCells[i].previousElementSibling.classList.contains('wallCell1')) {
 							if (top % 66 == 0)
@@ -187,6 +203,11 @@ function algo1() {
 					if (musors.length == 0) Finish();
 				}
 			}
+
+			if (top % 66 == 0) {
+				numOfStepsBlock.innerHTML = steps++;
+			}
+
 			if(cleaner.getBoundingClientRect().top+1 == tableBody.getBoundingClientRect().top) {
 				clearInterval(move);
 				moveLeft();
@@ -198,6 +219,10 @@ function algo1() {
 	var finishAlert = document.getElementsByClassName('finish')[0];
 	function Finish() {
 		clearInterval(move);
+		var finishTime = new Date().getMilliseconds();
+		//var elapsed = (finishTime.getTime() - startMsec) / 1000;
+
+		//document.getElementById('elapsedTime').innerHTML = elapsed.toString();
 		finishAlert.classList.add('open');
 	}
 
