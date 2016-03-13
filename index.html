@@ -10,6 +10,7 @@
     <script src="content/js/main.js"></script>
     <script src="content/js/algorithm1.js"></script>
     <script src="content/js/algorithm2.js"></script>
+    <script src="content/js/algorithm3.js"></script>
 
 </head>
 <body>
@@ -23,6 +24,7 @@
       <div class="chooseAlgorithm">
           <button class="btn btn-default algo1">Algorithm #1</button>
           <button class="btn btn-default algo2">Algorithm #2</button>
+          <button class="btn btn-default algo3">Algorithm #3</button>
       </div>
       <div class="info alert alert-info">
           <span>
@@ -38,14 +40,14 @@
   </header>
   <div class="environment">
 
-      <section>
+      <section class="content">
           <table>
               <tbody class="tableBody">
               <!--<div id="cleaner" class="cleaner" width="66">
                   <img src="content/images/aspirator_64.png" alt="" width="100%" height="100%">
               </div>-->
                 <tr class="tableRow">
-                    <td class="tableCell setBeforeWall1 1beforeWall1"></td>
+                    <td class="tableCell topLeftAngle setBeforeWall1 1beforeWall1"></td>
                     <td class="tableCell setBeforeWall1 1beforeWall1"></td>
                     <td class="tableCell setBeforeWall1 1beforeWall1"></td>
                     <td class="tableCell setBeforeWall1 1beforeWall1"></td>
@@ -64,79 +66,79 @@
                     <td class="tableCell setAfterWall1 1afterWall1"></td>
                     <td class="tableCell setAfterWall1 1afterWall1"></td>
                     <td class="tableCell preLast1AfterWall1 setAfterWall1 1afterWall1"></td>
-                    <td class="tableCell betweenW1W3 setAfterWall1 1afterWall1"></td>
+                    <td class="tableCell topRightAngle betweenW1W3 setAfterWall1 1afterWall1"></td>
                 </tr>
                 <tr class="tableRow">
                     <td class="tableCell setBeforeWall1 2beforeWall1"></td>
-                    <td class="tableCell setBeforeWall1 2beforeWall1"></td>
-                    <td class="tableCell setBeforeWall1 2beforeWall1"></td>
-                    <td class="tableCell setBeforeWall1 2beforeWall1"></td>
+                    <td class="tableCell areaWithoutBorders setBeforeWall1 2beforeWall1"></td>
+                    <td class="tableCell areaWithoutBorders setBeforeWall1 2beforeWall1"></td>
+                    <td class="tableCell areaWithoutBorders setBeforeWall1 2beforeWall1"></td>
                     <td class="tableCell setBeforeWall1 2beforeWall1"></td>
                     <td class="wallCell1"></td>
                     <td class="tableCell setAfterWall1 2afterWall1"></td>
-                    <td class="tableCell setAfterWall1 2afterWall1"></td>
-                    <td class="tableCell setAfterWall1 2afterWall1"></td>
-                    <td class="tableCell setAfterWall1 2afterWall1"></td>
-                    <td class="tableCell setAfterWall1 2afterWall1"></td>
-                    <td class="tableCell setAfterWall1 2afterWall1"></td>
-                    <td class="tableCell setAfterWall1 2afterWall1"></td>
-                    <td class="tableCell setAfterWall1 2afterWall1"></td>
-                    <td class="tableCell setAfterWall1 2afterWall1"></td>
-                    <td class="tableCell setAfterWall1 2afterWall1"></td>
-                    <td class="tableCell setAfterWall1 2afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 2afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 2afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 2afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 2afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 2afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 2afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 2afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 2afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 2afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 2afterWall1"></td>
                     <td class="tableCell setAfterWall1 2afterWall1"></td>
                     <td class="wallCell3"></td>
                     <td class="tableCell setAfterWall3 1afterWall3"></td>
                 </tr>
                 <tr class="tableRow">
                     <td class="tableCell setBeforeWall1 3beforeWall1"></td>
-                    <td class="tableCell setBeforeWall1 3beforeWall1"></td>
-                    <td class="tableCell setBeforeWall1 3beforeWall1"></td>
-                    <td class="tableCell setBeforeWall1 3beforeWall1"></td>
+                    <td class="tableCell areaWithoutBorders setBeforeWall1 3beforeWall1"></td>
+                    <td class="tableCell areaWithoutBorders setBeforeWall1 3beforeWall1"></td>
+                    <td class="tableCell areaWithoutBorders setBeforeWall1 3beforeWall1"></td>
                     <td class="tableCell setBeforeWall1 3beforeWall1"></td>
                     <td class="wallCell1"></td>
                     <td class="tableCell setAfterWall1 3afterWall1"></td>
-                    <td class="tableCell setAfterWall1 3afterWall1"></td>
-                    <td class="tableCell setAfterWall1 3afterWall1"></td>
-                    <td class="tableCell setAfterWall1 3afterWall1"></td>
-                    <td class="tableCell setAfterWall1 3afterWall1"></td>
-                    <td class="tableCell setAfterWall1 3afterWall1"></td>
-                    <td class="tableCell setAfterWall1 3afterWall1"></td>
-                    <td class="tableCell setAfterWall1 3afterWall1"></td>
-                    <td class="tableCell setAfterWall1 3afterWall1"></td>
-                    <td class="tableCell setAfterWall1 3afterWall1"></td>
-                    <td class="tableCell setAfterWall1 3afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 3afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 3afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 3afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 3afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 3afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 3afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 3afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 3afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 3afterWall1"></td>
+                    <td class="tableCell areaWithoutBorders setAfterWall1 3afterWall1"></td>
                     <td class="tableCell setAfterWall1 3afterWall1"></td>
                     <td class="wallCell3"></td>
                     <td class="tableCell setAfterWall3 2afterWall3"></td>
                 </tr>
                 <tr class="tableRow">
                     <td class="tableCell setBeforeWall1 4beforeWall1"></td>
-                    <td class="tableCell setBeforeWall1 4beforeWall1"></td>
-                    <td class="tableCell setBeforeWall1 4beforeWall1"></td>
-                    <td class="tableCell setBeforeWall1 4beforeWall1"></td>
+                    <td class="tableCell areaWithoutBorders setBeforeWall1 4beforeWall1"></td>
+                    <td class="tableCell areaWithoutBorders setBeforeWall1 4beforeWall1"></td>
+                    <td class="tableCell areaWithoutBorders setBeforeWall1 4beforeWall1"></td>
                     <td class="tableCell setBeforeWall1 4beforeWall1"></td>
                     <td class="wallCell1"></td>
-                    <td class="tableCell setAfterWall1 4afterWall1"></td>
-                    <td class="tableCell setAfterWall1 4afterWall1"></td>
-                    <td class="tableCell setAfterWall1 4afterWall1"></td>
-                    <td class="tableCell setAfterWall1 4afterWall1"></td>
-                    <td class="tableCell setAfterWall1 4afterWall1"></td>
-                    <td class="tableCell setAfterWall1 4afterWall1"></td>
-                    <td class="tableCell setAfterWall1 4afterWall1"></td>
-                    <td class="tableCell setAfterWall1 4afterWall1"></td>
-                    <td class="tableCell setAfterWall1 4afterWall1"></td>
-                    <td class="tableCell setAfterWall1 4afterWall1"></td>
-                    <td class="tableCell setAfterWall1 4afterWall1"></td>
-                    <td class="tableCell setAfterWall1 4afterWall1"></td>
+                    <td class="tableCell aboveWall2 setAfterWall1 4afterWall1"></td>
+                    <td class="tableCell aboveWall2 setAfterWall1 4afterWall1"></td>
+                    <td class="tableCell aboveWall2 setAfterWall1 4afterWall1"></td>
+                    <td class="tableCell aboveWall2 setAfterWall1 4afterWall1"></td>
+                    <td class="tableCell aboveWall2 setAfterWall1 4afterWall1"></td>
+                    <td class="tableCell aboveWall2 setAfterWall1 4afterWall1"></td>
+                    <td class="tableCell aboveWall2 setAfterWall1 4afterWall1"></td>
+                    <td class="tableCell aboveWall2 setAfterWall1 4afterWall1"></td>
+                    <td class="tableCell aboveWall2 setAfterWall1 4afterWall1"></td>
+                    <td class="tableCell aboveWall2 setAfterWall1 4afterWall1"></td>
+                    <td class="tableCell aboveWall2 setAfterWall1 4afterWall1"></td>
+                    <td class="tableCell aboveWall2 setAfterWall1 4afterWall1"></td>
                     <td class="wallCell3"></td>
                     <td class="tableCell setAfterWall3 3afterWall3"></td>
                 </tr>
                 <tr class="tableRow">
                     <td class="tableCell setBeforeWall1 5beforeWall1"></td>
-                    <td class="tableCell setBeforeWall1 5beforeWall1"></td>
-                    <td class="tableCell setBeforeWall1 5beforeWall1"></td>
-                    <td class="tableCell setBeforeWall1 5beforeWall1"></td>
+                    <td class="tableCell areaWithoutBorders setBeforeWall1 5beforeWall1"></td>
+                    <td class="tableCell areaWithoutBorders setBeforeWall1 5beforeWall1"></td>
+                    <td class="tableCell areaWithoutBorders setBeforeWall1 5beforeWall1"></td>
                     <td class="tableCell setBeforeWall1 5beforeWall1"></td>
                     <td class="wallCell1 wallCell2"></td>
                     <td class="wallCell2"></td>
@@ -156,32 +158,32 @@
                 </tr>
                 <tr class="tableRow">
                     <td class="tableCell goUp setWithoutWall without1Wall"></td>
-                    <td class="tableCell goUp setWithoutWall without1Wall"></td>
-                    <td class="tableCell goUp setWithoutWall without1Wall"></td>
-                    <td class="tableCell goUp setWithoutWall without1Wall"></td>
-                    <td class="tableCell goUp setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
-                    <td class="tableCell setWithoutWall without1Wall"></td>
+                    <td class="tableCell areaWithoutBorders goUp setWithoutWall without1Wall"></td>
+                    <td class="tableCell areaWithoutBorders goUp setWithoutWall without1Wall"></td>
+                    <td class="tableCell areaWithoutBorders goUp setWithoutWall without1Wall"></td>
+                    <td class="tableCell areaWithoutBorders goUp setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
+                    <td class="tableCell underWall2 setWithoutWall without1Wall"></td>
                     <td class="tableCell AngoUp setWithoutWall without1Wall"></td>
                 </tr>
                 <tr class="tableRow">
+                    <td class="tableCell bottomLeftAngle goUp setWithoutWall without2Wall"></td>
                     <td class="tableCell goUp setWithoutWall without2Wall"></td>
                     <td class="tableCell goUp setWithoutWall without2Wall"></td>
                     <td class="tableCell goUp setWithoutWall without2Wall"></td>
                     <td class="tableCell goUp setWithoutWall without2Wall"></td>
-                    <td class="tableCell goUp setWithoutWall without2Wall"></td>
                     <td class="tableCell setWithoutWall without2Wall"></td>
                     <td class="tableCell setWithoutWall without2Wall"></td>
                     <td class="tableCell setWithoutWall without2Wall"></td>
@@ -196,7 +198,7 @@
                     <td class="tableCell setWithoutWall without2Wall"></td>
                     <td class="tableCell setWithoutWall without2Wall"></td>
                     <td class="tableCell setWithoutWall without2Wall"></td>
-                    <td class="tableCell AngoUp setWithoutWall without2Wall"></td>
+                    <td class="tableCell bottomRightAngle AngoUp setWithoutWall without2Wall"></td>
                 </tr>
               </tbody>
           </table>

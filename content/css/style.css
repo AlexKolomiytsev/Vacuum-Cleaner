@@ -17,7 +17,7 @@ body {
 }
 .header h1 {
     font-family: sans-serif, monospace;
-    font-size: 70px;
+    font-size: 50px;
     color: #00ADB5;
 }
 .environment {
@@ -27,13 +27,13 @@ body {
 }
 .tableCell {
     border: 2px solid #423737;
-    width: 64.1px;
+    width: 64px;
     height: 64px;
 }
 .wallCell, .wallCell1, .wallCell2, .wallCell3 {
     background: #423737;
     border: 2px solid #423737;
-    width: 64.1px;
+    width: 64px;
     height: 64px;
 }
 .cleaner {

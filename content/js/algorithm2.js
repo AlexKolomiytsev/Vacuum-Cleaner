@@ -724,6 +724,7 @@ function algo2() {
 			cleaner.style.left = left+'px';
 		}, speed);
 	}
+
 	function moveLeft() {
 		move = setInterval(function () {
 			for (var i = 0; i < tableCells.length; ++i) {
