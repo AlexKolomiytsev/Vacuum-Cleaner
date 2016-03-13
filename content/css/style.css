@@ -46,10 +46,12 @@ body {
     transform: translateX(-50%);
 }
 .info {
+    display: none;
     position: absolute;
-    top: 5%;
+    top: -15%;
     left: 70%;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    height: 80px;
 }
 .finish {
     display: none;
@@ -76,7 +78,16 @@ body {
     display: block;
     margin-top: 10px;
 }
-
+.stepsInput {
+    width: 50px;
+    background: #5D5D5D;
+    border: 0px;
+    color: #00ADB5;
+    text-align: center;
+}
+.dirtyDegree {
+    position: absolute;
+}
 
 
 

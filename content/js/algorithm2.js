@@ -3,6 +3,15 @@
  */
 function algo2() {
 	var startTime = new Date();
+
+	var counterForAddGargabe = 0;
+
+	var steps;
+	var stepsInput = document.getElementsByClassName('stepsInput')[0];
+	stepsInput.addEventListener('change', function() {
+		steps = stepsInput.value;
+	});
+
 	Array.prototype.max = function() {
 		return Math.max.apply(null, this);
 	};
@@ -13,14 +22,15 @@ function algo2() {
 
 	var tBody = document.getElementsByClassName('tableBody')[0];
 	var numOfGarbageBlock = document.getElementById('numOfGarbage');
-	var numOfStepsBlock = document.getElementById('numOfSteps');
+	var aveDirtyDegreeBlock = document.getElementById('dirtyDegree');
+
 	console.log(tBody);
 
 	var tableCells = document.getElementsByClassName('tableCell');
 
 	try {
-		for (var i = 0, l = 50; i < l; ++i) {
-			var randomNum = Math.round(Math.random() * 122);
+		for (var i = 0, l = 100; i < l; ++i) {
+			var randomNum = Math.round(0 + Math.random() * (120 - 1));
 			var isGarbage = tableCells[randomNum].hasAttribute("garbage");
 			if (!isGarbage) {
 				tableCells[randomNum].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
@@ -49,11 +59,14 @@ function algo2() {
 
 
 	var musors = document.getElementsByClassName('musor');
-	var steps = 0;
+
 	numOfGarbageBlock.innerHTML = musors.length;
-	numOfStepsBlock.innerHTML = steps;
+	aveDirtyDegreeBlock.innerHTML = averageDirtyDegree() + "%";
+
+
 
 	var cleaner = document.getElementsByClassName('cleaner')[0];
+	var cleanerTrue = cleaner.children[0];
 	var wallsLeft = document.getElementsByClassName('wallCell1');
 	var wallsBottom = document.getElementsByClassName('wallCell2');
 	var tableBody = document.getElementsByClassName('tableBody')[0];
@@ -65,15 +78,27 @@ function algo2() {
 
 	var speed = 1;
 
+	function averageDirtyDegree() {
+		var numOfGarbage = 0;
+		for (var jj = 0; jj < tableCells.length; jj++) {
+			if(tableCells[jj].children.length > 0) {
+				++numOfGarbage;
+			}
+		}
+		//var degree =
+		return Math.round((numOfGarbage / tableCells.length) * 100);
+	}
+
 	function moveRight() {
 		move = setInterval(function () {
+			left += 1;
+			cleaner.style.left = left+'px';
 			for (var i = 0; i < tableCells.length; ++i) {
-				if (((cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left)
-						|| (cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1)
-						|| (cleaner.getBoundingClientRect().left+1 == tableCells[i].getBoundingClientRect().left))
-						&& ((cleaner.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top)
-						|| (cleaner.getBoundingClientRect().top+1 == tableCells[i].getBoundingClientRect().top)
-						|| (cleaner.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top+1))) {
+				if (cleanerTrue.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1
+						&& cleanerTrue.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top
+						&& cleanerTrue.getBoundingClientRect().bottom+2 == tableCells[i].getBoundingClientRect().bottom) {
+
+
 
 
 					var cell = tableCells[i];
@@ -85,14 +110,40 @@ function algo2() {
 					// очищаем ячейку от "грязи"
 					cell.innerHTML = "";
 					cell.setAttribute("clean","");
+					tableCells[i].removeAttribute("garbage");
 					numOfGarbageBlock.innerHTML = musors.length;
+					aveDirtyDegreeBlock.innerHTML = averageDirtyDegree() + "%";
+
+
 					if (musors.length == 0) {
 						clearInterval(move);
+						throw new Error('STOP!');
 						Finish();
 					}
-					if ((left % 66 == 0) || (left % 67 == 0) && !((left % 66 == 0) && (left % 67 == 0))) {
-						numOfStepsBlock.innerHTML = steps++;
+
+					stepsInput.value = --steps;
+					if (steps == 0) {
+						clearInterval(move);
+						throw new Error('STOP!');
 					}
+
+					counterForAddGargabe += 0.5;
+					if (counterForAddGargabe % 10 == 0) {
+						try {
+							for (var i = 0, l = 1; i < l; ++i) {
+								var randomNum = Math.round(Math.random() * 122);
+								var isGarbage = tableCells[randomNum].hasAttribute("garbage");
+								if (!isGarbage) {
+									tableCells[randomNum].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
+									tableCells[randomNum].setAttribute("garbage", "");
+								}
+							}
+						}
+						catch(ex) {
+							console.log(ex);
+						}
+					}
+
 
 					//определяем к какой области принадлежит текущая йчейка
 					var arrOfAreas = ['setBeforeWall1', 'setAfterWall1', 'setWithoutWall', 'setAfterWall3']
@@ -530,47 +581,8 @@ function algo2() {
 								goTo4RowAfterW1 = false
 							}
 						}
-						/*
-						var GarbageArray1ForIndexes = [];
-						var GarbageArray2ForIndexes = [];
-						var GarbageArray3ForIndexes = [];
-						var GarbageArray4ForIndexes = [];
-						for (var www = 0; www < rowAfter1Wall1.length; www++) {
-							if (rowAfter1Wall1[www].children.length > 0) {
-								GarbageArray1ForIndexes.push(www);
-							}
-						}
-						for (var www = 0; www < rowAfter2Wall1.length; www++) {
-							if (rowAfter2Wall1[www].children.length > 0) {
-								GarbageArray2ForIndexes.push(www);
-							}
-						}
-						for (var www = 0; www < rowAfter3Wall1.length; www++) {
-							if (rowAfter3Wall1[www].children.length > 0) {
-								GarbageArray3ForIndexes.push(www);
-							}
-						}
-						for (var www = 0; www < rowAfter4Wall1.length; www++) {
-							if (rowAfter4Wall1[www].children.length > 0) {
-								GarbageArray4ForIndexes.push(www);
-							}
-						}
 
 
-						var minIrow1 = GarbageArray1ForIndexes.min();
-						var minIrow2 = GarbageArray2ForIndexes.min();
-						var minIrow3 = GarbageArray1ForIndexes.min();
-						var minIrow4 = GarbageArray2ForIndexes.min();
-
-						if (cell.classList.contains('betweenW1W3') && !goToAnotherSetAfterW1) {
-							clearInterval(move);
-							moveLeft();
-						}
-
-						if (goTo1RowAfterW1) {
-							//alert("yo");
-						}
-*/
 						if (!goToAnotherSetAfterW1) {
 							if (cell.classList.contains('betweenW1W3')) {
 								clearInterval(move);
@@ -720,65 +732,94 @@ function algo2() {
 
 				}
 			}
-			left += 1;
-			cleaner.style.left = left+'px';
+
 		}, speed);
 	}
 
 	function moveLeft() {
 		move = setInterval(function () {
+			left -= 1;
+			cleaner.style.left = left+'px';
 			for (var i = 0; i < tableCells.length; ++i) {
-				if (((cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left)
-						|| (cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1)
-						|| (cleaner.getBoundingClientRect().left+1 == tableCells[i].getBoundingClientRect().left))
-						&& ((cleaner.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top)
-						|| (cleaner.getBoundingClientRect().top+1 == tableCells[i].getBoundingClientRect().top)
-						|| (cleaner.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top+1))) {
+				//if (((cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left)
+				//		|| (cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1)
+				//		|| (cleaner.getBoundingClientRect().left+1 == tableCells[i].getBoundingClientRect().left))
+				//		&& ((cleaner.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top)
+				//		|| (cleaner.getBoundingClientRect().top+1 == tableCells[i].getBoundingClientRect().top)
+				//		|| (cleaner.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top+1))) {
+
+					if (cleanerTrue.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1
+							&& cleanerTrue.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top
+							&& cleanerTrue.getBoundingClientRect().bottom+2 == tableCells[i].getBoundingClientRect().bottom) {
+
+						var cell = tableCells[i];
+						var nextBrother = cell.nextElementSibling; // следующая ячейка
+						var prevBrother = cell.previousElementSibling; // предыдущая ячейка
+						var parent = cell.parentNode; //родитель текущей ячейки
+						var cellClassArr = cell.className.split(" "); //массив с классами текущей ячейки
+
+						// очищаем ячейку от "грязи"
+						cell.innerHTML = "";
+						cell.setAttribute("clean","");
+						tableCells[i].removeAttribute("garbage");
+						numOfGarbageBlock.innerHTML = musors.length;
+						aveDirtyDegreeBlock.innerHTML = averageDirtyDegree() + "%";
+
+						if (musors.length == 0) {
+							clearInterval(move);
+							throw new Error('STOP!');
+							Finish();
+						}
+
+						stepsInput.value = --steps;
+						if (steps == 0) {
+							clearInterval(move);
+							throw new Error('STOP!');
+						}
 
 
-					var cell = tableCells[i];
-					var nextBrother = cell.nextElementSibling; // следующая ячейка
-					var prevBrother = cell.previousElementSibling; // предыдущая ячейка
-					var parent = cell.parentNode; //родитель текущей ячейки
-					var cellClassArr = cell.className.split(" "); //массив с классами текущей ячейки
-
-					// очищаем ячейку от "грязи"
-					cell.innerHTML = "";
-					cell.setAttribute("clean","");
-					numOfGarbageBlock.innerHTML = musors.length;
-					if (musors.length == 0) {
-						clearInterval(move);
-						Finish();
-					}
-					if ((left % 66 == 0) || (left % 67 == 0) && !((left % 66 == 0) && (left % 67 == 0))) {
-						numOfStepsBlock.innerHTML = steps++;
-					}
-
-					//определяем к какой области принадлежит текущая йчейка
-					var arrOfAreas = ['setBeforeWall1', 'setAfterWall1', 'setWithoutWall', 'setAfterWall3']
-					for (var j = 0; j < cellClassArr.length;j++) {
-						var classNameSet;
-						for (var jj = 0; jj < arrOfAreas.length; jj++) {
-							if (cellClassArr[j] == arrOfAreas[jj]) {
-								classNameSet = arrOfAreas[jj];
-								break;
+						counterForAddGargabe += 0.5;
+						if (counterForAddGargabe % 10 == 0) {
+							try {
+								for (var i = 0, l = 1; i < l; ++i) {
+									var randomNum = Math.round(Math.random() * 122);
+									var isGarbage = tableCells[randomNum].hasAttribute("garbage");
+									if (!isGarbage) {
+										tableCells[randomNum].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
+										tableCells[randomNum].setAttribute("garbage", "");
+									}
+								}
+							}
+							catch(ex) {
+								console.log(ex);
 							}
 						}
-					}
-					//класс конкретного ряда
-					var cellClass = cellClassArr[cellClassArr.length-1];
+
+						//определяем к какой области принадлежит текущая йчейка
+						var arrOfAreas = ['setBeforeWall1', 'setAfterWall1', 'setWithoutWall', 'setAfterWall3']
+						for (var j = 0; j < cellClassArr.length;j++) {
+							var classNameSet;
+							for (var jj = 0; jj < arrOfAreas.length; jj++) {
+								if (cellClassArr[j] == arrOfAreas[jj]) {
+									classNameSet = arrOfAreas[jj];
+									break;
+								}
+							}
+						}
+						//класс конкретного ряда
+						var cellClass = cellClassArr[cellClassArr.length-1];
 
 
-					//берем отдельно каждую строчку в области перед первой стенкой
-					var rowBefore1Wall1 = document.getElementsByClassName('1beforeWall1');
-					var rowBefore2Wall1 = document.getElementsByClassName('2beforeWall1');
-					var rowBefore3Wall1 = document.getElementsByClassName('3beforeWall1');
-					var rowBefore4Wall1 = document.getElementsByClassName('4beforeWall1');
-					var rowBefore5Wall1 = document.getElementsByClassName('5beforeWall1');
-					//берем все элементы перед первой стенкой
-					var setBeforeWall1 = document.getElementsByClassName('setBeforeWall1');
-					//определяем есть ли в области перед первой стенкой мусор
-					for (var q0 = 0; q0 < setBeforeWall1.length; q0++) {
+						//берем отдельно каждую строчку в области перед первой стенкой
+						var rowBefore1Wall1 = document.getElementsByClassName('1beforeWall1');
+						var rowBefore2Wall1 = document.getElementsByClassName('2beforeWall1');
+						var rowBefore3Wall1 = document.getElementsByClassName('3beforeWall1');
+						var rowBefore4Wall1 = document.getElementsByClassName('4beforeWall1');
+						var rowBefore5Wall1 = document.getElementsByClassName('5beforeWall1');
+						//берем все элементы перед первой стенкой
+						var setBeforeWall1 = document.getElementsByClassName('setBeforeWall1');
+						//определяем есть ли в области перед первой стенкой мусор
+						for (var q0 = 0; q0 < setBeforeWall1.length; q0++) {
 						goToAnotherSet = false;
 						if (setBeforeWall1[q0].children.length > 0) {
 							goToAnotherSet = false;
@@ -790,13 +831,13 @@ function algo2() {
 					} //goToAnotherSet
 
 
-					//берем отдельно каждую строчку в области без стенок
-					var row1WW = document.getElementsByClassName('without1Wall');
-					var row2WW = document.getElementsByClassName('without2Wall');
-					//берем все элементы в области без стенок
-					var setWW = document.getElementsByClassName('setWithoutWall');
-					//определяем есть ли в области без стенок мусор
-					for (var w0 = 0; w0 < setWW.length; w0++) {
+						//берем отдельно каждую строчку в области без стенок
+						var row1WW = document.getElementsByClassName('without1Wall');
+						var row2WW = document.getElementsByClassName('without2Wall');
+						//берем все элементы в области без стенок
+						var setWW = document.getElementsByClassName('setWithoutWall');
+						//определяем есть ли в области без стенок мусор
+						for (var w0 = 0; w0 < setWW.length; w0++) {
 						goToAnotherSetWW = false;
 						if (setWW[w0].children.length > 0) {
 							goToAnotherSetWW = false;
@@ -808,15 +849,15 @@ function algo2() {
 					} //goToAnotherSetWW
 
 
-					//берем отдельно каждую строчку в области после третьей стенки
-					var rowAfter1Wall3 = document.getElementsByClassName('1afterWall3');
-					var rowAfter2Wall3 = document.getElementsByClassName('2afterWall3');
-					var rowAfter3Wall3 = document.getElementsByClassName('3afterWall3');
-					var rowAfter4Wall3 = document.getElementsByClassName('4afterWall3');
-					//берем все элементы из области после третьей стенки
-					var setAfterWall3 = document.getElementsByClassName('setAfterWall3');
-					//определяем есть ли в области после третьей стенки мусор
-					for (var e0 = 0; e0 < setAfterWall3.length; e0++) {
+						//берем отдельно каждую строчку в области после третьей стенки
+						var rowAfter1Wall3 = document.getElementsByClassName('1afterWall3');
+						var rowAfter2Wall3 = document.getElementsByClassName('2afterWall3');
+						var rowAfter3Wall3 = document.getElementsByClassName('3afterWall3');
+						var rowAfter4Wall3 = document.getElementsByClassName('4afterWall3');
+						//берем все элементы из области после третьей стенки
+						var setAfterWall3 = document.getElementsByClassName('setAfterWall3');
+						//определяем есть ли в области после третьей стенки мусор
+						for (var e0 = 0; e0 < setAfterWall3.length; e0++) {
 						goToAnotherSetAfterW3 = false;
 						if (setAfterWall3[e0].children.length > 0) {
 							goToAnotherSetAfterW3 = false;
@@ -828,14 +869,14 @@ function algo2() {
 					} //goToAnotherSetAfterW3
 
 
-					//берем отдельно каждую строчку в области после первой стенки
-					var rowAfter1Wall1 = document.getElementsByClassName('1afterWall1');
-					var rowAfter2Wall1 = document.getElementsByClassName('2afterWall1');
-					var rowAfter3Wall1 = document.getElementsByClassName('3afterWall1');
-					var rowAfter4Wall1 = document.getElementsByClassName('4afterWall1');
-					//берем все элементы из области после первой стенки
-					var setAfterWall1 = document.getElementsByClassName('setAfterWall1');
-					for (var r0 = 0; r0 < setAfterWall1.length; r0++) {
+						//берем отдельно каждую строчку в области после первой стенки
+						var rowAfter1Wall1 = document.getElementsByClassName('1afterWall1');
+						var rowAfter2Wall1 = document.getElementsByClassName('2afterWall1');
+						var rowAfter3Wall1 = document.getElementsByClassName('3afterWall1');
+						var rowAfter4Wall1 = document.getElementsByClassName('4afterWall1');
+						//берем все элементы из области после первой стенки
+						var setAfterWall1 = document.getElementsByClassName('setAfterWall1');
+						for (var r0 = 0; r0 < setAfterWall1.length; r0++) {
 						goToAnotherSetAfterW1 = false;
 						if (setAfterWall1[r0].children.length > 0) {
 							goToAnotherSetAfterW1 = false;
@@ -1380,19 +1421,25 @@ function algo2() {
 				}
 			}
 
-			left -= 1;
-			cleaner.style.left = left+'px';
+
 		}, speed);
 	}
 
 	function moveDown() {
 		move = setInterval(function () {
+			top += 1;
+			cleaner.style.top = top+'px';
 			for (var i = 0; i < tableCells.length; ++i) {
-				if (((cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left)
-						|| (cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1)
-						|| (cleaner.getBoundingClientRect().left+1 == tableCells[i].getBoundingClientRect().left)
-						|| (cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+2))
-						&& (cleaner.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top)) {
+				//if (((cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left)
+				//		|| (cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1)
+				//		|| (cleaner.getBoundingClientRect().left+1 == tableCells[i].getBoundingClientRect().left))
+				//		&& ((cleaner.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top)
+				//		|| (cleaner.getBoundingClientRect().top+1 == tableCells[i].getBoundingClientRect().top)
+				//		|| (cleaner.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top+1))) {
+
+				if (cleanerTrue.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1
+						&& cleanerTrue.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top
+						&& cleanerTrue.getBoundingClientRect().bottom+2 == tableCells[i].getBoundingClientRect().bottom) {
 
 					var cell = tableCells[i];
 					var nextBrother = cell.nextElementSibling; // следующая ячейка
@@ -1403,13 +1450,37 @@ function algo2() {
 					// очищаем ячейку от "грязи"
 					cell.innerHTML = "";
 					cell.setAttribute("clean","");
+					tableCells[i].removeAttribute("garbage");
 					numOfGarbageBlock.innerHTML = musors.length;
+					aveDirtyDegreeBlock.innerHTML = averageDirtyDegree() + "%";
+
 					if (musors.length == 0) {
 						clearInterval(move);
+						throw new Error('STOP!');
 						Finish();
 					}
-					if (top % 66 == 0) {
-						numOfStepsBlock.innerHTML = steps++;
+
+					stepsInput.value = --steps;
+					if (steps == 0) {
+						clearInterval(move);
+						throw new Error('STOP!');
+					}
+
+					counterForAddGargabe += 0.5;
+					if (counterForAddGargabe % 10 == 0) {
+						try {
+							for (var i = 0, l = 1; i < l; ++i) {
+								var randomNum = Math.round(Math.random() * 122);
+								var isGarbage = tableCells[randomNum].hasAttribute("garbage");
+								if (!isGarbage) {
+									tableCells[randomNum].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
+									tableCells[randomNum].setAttribute("garbage", "");
+								}
+							}
+						}
+						catch(ex) {
+							console.log(ex);
+						}
 					}
 
 					//определяем к какой области принадлежит текущая йчейка
@@ -1969,20 +2040,25 @@ function algo2() {
 				}
 			}
 
-			top += 1;
-			cleaner.style.top = top+'px';
+
 		}, speed);
 	}
 
 	function moveUp() {
 		move = setInterval(function () {
+			top -= 1;
+			cleaner.style.top = top+'px';
 			for (var i = 0; i < tableCells.length; ++i) {
-				if (((cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left)
-						|| (cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1)
-						|| (cleaner.getBoundingClientRect().left+1 == tableCells[i].getBoundingClientRect().left)
-						|| (cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+2)
-						|| (cleaner.getBoundingClientRect().left+2 == tableCells[i].getBoundingClientRect().left))
-						&& (cleaner.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top)) {
+				//if (((cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left)
+				//		|| (cleaner.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1)
+				//		|| (cleaner.getBoundingClientRect().left+1 == tableCells[i].getBoundingClientRect().left))
+				//		&& ((cleaner.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top)
+				//		|| (cleaner.getBoundingClientRect().top+1 == tableCells[i].getBoundingClientRect().top)
+				//		|| (cleaner.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top+1))) {
+
+				if (cleanerTrue.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1
+						&& cleanerTrue.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top
+						&& cleanerTrue.getBoundingClientRect().bottom+2 == tableCells[i].getBoundingClientRect().bottom) {
 
 
 					var cell = tableCells[i];
@@ -1994,13 +2070,37 @@ function algo2() {
 					// очищаем ячейку от "грязи"
 					cell.innerHTML = "";
 					cell.setAttribute("clean","");
+					tableCells[i].removeAttribute("garbage");
 					numOfGarbageBlock.innerHTML = musors.length;
+					aveDirtyDegreeBlock.innerHTML = averageDirtyDegree() + "%";
+
 					if (musors.length == 0) {
 						clearInterval(move);
+						throw new Error('STOP!');
 						Finish();
 					}
-					if (top % 66 == 0) {
-						numOfStepsBlock.innerHTML = steps++;
+
+					stepsInput.value = --steps;
+					if (steps == 0) {
+						clearInterval(move);
+						throw new Error('STOP!');
+					}
+
+					counterForAddGargabe += 0.5;
+					if (counterForAddGargabe % 10 == 0) {
+						try {
+							for (var i = 0, l = 1; i < l; ++i) {
+								var randomNum = Math.round(Math.random() * 122);
+								var isGarbage = tableCells[randomNum].hasAttribute("garbage");
+								if (!isGarbage) {
+									tableCells[randomNum].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
+									tableCells[randomNum].setAttribute("garbage", "");
+								}
+							}
+						}
+						catch(ex) {
+							console.log(ex);
+						}
 					}
 
 					//определяем к какой области принадлежит текущая йчейка
@@ -2529,8 +2629,7 @@ function algo2() {
 					}
 				}
 			}
-			top -= 1;
-			cleaner.style.top = top+'px';
+
 		}, speed);
 	}
 

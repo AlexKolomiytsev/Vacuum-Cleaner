@@ -2,7 +2,14 @@
  * Created by sanya on 07.03.2016.
  */
 function algo3() {
-	var startTime = new Date();
+	var steps;
+	var counterForAddGargabe = 0;
+	var stepsInput = document.getElementsByClassName('stepsInput')[0];
+	stepsInput.addEventListener('change', function() {
+		steps = stepsInput.value;
+	});
+
+
 	Array.prototype.max = function() {
 		return Math.max.apply(null, this);
 	};
@@ -13,15 +20,15 @@ function algo3() {
 
 	var tBody = document.getElementsByClassName('tableBody')[0];
 	var numOfGarbageBlock = document.getElementById('numOfGarbage');
-	var numOfStepsBlock = document.getElementById('numOfSteps');
-	console.log(tBody);
+	var aveDirtyDegreeBlock = document.getElementById('dirtyDegree');
 
 	var tableCells = document.getElementsByClassName('tableCell');
+	var areaWithoutBorders = document.getElementsByClassName('areaWithoutBorders');
 
 
 	try {
-		for (var i = 0, l = 50; i < l; ++i) {
-			var randomNum = Math.round(Math.random() * 122);
+		for (var i = 0, l = 100; i < l; ++i) {
+			var randomNum = Math.round(0 + Math.random() * (120 - 1));
 			var isGarbage = tableCells[randomNum].hasAttribute("garbage");
 			if (!isGarbage) {
 				tableCells[randomNum].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
@@ -32,13 +39,14 @@ function algo3() {
 	catch(ex) {
 		console.log(ex);
 	}
-	for (var i = 0; i < tableCells.length; i++) {
-		var rand = Math.round(Math.random()*122);
+	//areaWithoutBorders
+	for (var i = 0; i < areaWithoutBorders.length; i++) {
+		var rand = Math.round(Math.random()*36);
 		var isGarbage = tableCells[rand].hasAttribute("garbage");
 
 		if (!isGarbage) {
-			var cellTop = tableCells[rand].getBoundingClientRect().top;
-			var cellLeft = tableCells[rand].getBoundingClientRect().left;
+			var cellTop = areaWithoutBorders[rand].getBoundingClientRect().top;
+			var cellLeft = areaWithoutBorders[rand].getBoundingClientRect().left;
 
 			tBody.insertAdjacentHTML('afterBegin', '<div id="cleaner" class="cleaner" width="66"> <img src="content/images/aspirator_64.png" alt="" width="100%" height="100%"> </div>');
 			var clnr = document.getElementById('cleaner');
@@ -50,9 +58,9 @@ function algo3() {
 
 
 	var musors = document.getElementsByClassName('musor');
-	var steps = 0;
 	numOfGarbageBlock.innerHTML = musors.length;
-	numOfStepsBlock.innerHTML = steps;
+	aveDirtyDegreeBlock.innerHTML = averageDirtyDegree() + "%";
+
 
 	var cleaner = document.getElementsByClassName('cleaner')[0];
 	var cleanerTrue = cleaner.children[0];
@@ -73,8 +81,20 @@ function algo3() {
 		return random;
 	}
 
-	function sensors(tableCells) {
-		var cell = tableCells;
+	function averageDirtyDegree() {
+		var numOfGarbage = 0;
+		for (var jj = 0; jj < tableCells.length; jj++) {
+			if(tableCells[jj].children.length > 0) {
+				++numOfGarbage;
+			}
+		}
+		//var degree =
+		return Math.round((numOfGarbage / tableCells.length) * 100);
+	}
+
+	var numOfGarbage = 0;
+	function sensors(tableCell) {
+		var cell = tableCell;
 		var nextBrother = cell.nextElementSibling; // следующая ячейка
 		var prevBrother = cell.previousElementSibling; // предыдущая ячейка
 		var parent = cell.parentNode; //родитель текущей ячейки
@@ -82,11 +102,33 @@ function algo3() {
 
 		cell.innerHTML = "";
 		cell.setAttribute("clean","");
+		cell.removeAttribute("garbage");
 		numOfGarbageBlock.innerHTML = musors.length;
+		aveDirtyDegreeBlock.innerHTML = averageDirtyDegree() + "%";
 		if (musors.length == 0) {
 			clearInterval(move);
 			Finish();
 		}
+		stepsInput.value = --steps;
+		if (steps == 0) {
+			clearInterval(move);
+			throw new Error('STOP!');
+		}
+
+		counterForAddGargabe += 0.5;
+		if (counterForAddGargabe % 10 == 0) {
+			var randd = Math.round(1 + Math.random() * (120 - 1));
+			console.log(randd);
+			var isGarbage = tableCells[randd].hasAttribute('garbage');
+			console.log(isGarbage);
+			if (!isGarbage) {
+				tableCells[randd].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
+				tableCells[randd].setAttribute("garbage", "");
+			}
+		}
+		//var rand = GenerateRandomNum(0, 122);
+
+
 
 		var isTopLeftAngle = (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
 													&& (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left);
