@@ -93,6 +93,8 @@ function algo3() {
 	}
 
 	var numOfGarbage = 0;
+
+
 	function sensors(tableCell) {
 		var cell = tableCell;
 		var nextBrother = cell.nextElementSibling; // следующая ячейка
@@ -539,19 +541,35 @@ function algo3() {
 		finishAlert.classList.add('open');
 	}
 
-
+	var btnNav = document.getElementsByClassName('btn-nav');
 	var btnStart = document.getElementsByClassName('btn-start')[0];
 	var btnStop = document.getElementsByClassName('btn-stop')[0];
 	var btnRetry = document.getElementsByClassName('btn-retry')[0];
 	btnStart.addEventListener('click', function() {
+		deactiveItems(btnNav);
+		this.classList.add('active');
+
+		var faq3 = document.getElementsByClassName('FAQ3')[0];
+		faq3.classList.remove('open');
 		moveDown();
 	});
 	btnStop.addEventListener('click', function() {
+		deactiveItems(btnNav);
+		this.classList.add('active');
+
 		clearInterval(move);
 	});
 	btnRetry.addEventListener('click', function() {
+		deactiveItems(btnNav);
+		this.classList.add('active');
+
 		window.location.reload();
 	});
+	function deactiveItems(collection) {
+		for (var i = 0; i < collection.length; ++i) {
+			collection[i].classList.remove('active');
+		}
+	}
 }
 
 
