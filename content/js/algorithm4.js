@@ -29,7 +29,7 @@ function algo4() {
 
 
 	try {
-		for (var i = 0, l = 100; i < l; ++i) {
+		for (var i = 0, l = 10; i < l; ++i) {
 			var randomNum = Math.round(0 + Math.random() * (120 - 1));
 			var isGarbage = tableCells[randomNum].hasAttribute("garbage");
 			if (!isGarbage) {
@@ -43,7 +43,7 @@ function algo4() {
 	}
 	//areaWithoutBorders
 	for (var i = 0; i < tableCells.length; i++) {
-		var rand = Math.round(Math.random()*36);
+		var rand = Math.round(Math.random()*120);
 		var isGarbage = tableCells[rand].hasAttribute("garbage");
 
 		if (!isGarbage) {
@@ -123,16 +123,382 @@ function algo4() {
 		counterForAddGargabe += 0.5;
 		if (counterForAddGargabe % 10 == 0) {
 			var randd = Math.round(1 + Math.random() * (120 - 1));
-			console.log(randd);
+
 			var isGarbage = tableCells[randd].hasAttribute('garbage');
-			console.log(isGarbage);
+
 			if (!isGarbage) {
 				tableCells[randd].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
 				tableCells[randd].setAttribute("garbage", "");
 			}
 		}
 
+		var indexOfCurrentCell;
+		for (var op = 0; op < parent.children.length; ++op) {
+			if (cell == parent.children[op]) {
+				indexOfCurrentCell = op;
+			}
+		}
 
+
+
+
+		var isTopLeftAngle = (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
+				&& (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left);
+		var isTopRightAngle = (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
+				&& (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right);
+		var isBottomLeftAngle = (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)
+				&& (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left);
+		var isBottomRightAngle = (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)
+				&& (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right);
+
+		if (isTopLeftAngle) {
+			var direction = GenerateRandomNum(1,2);
+			if (direction == 1) {
+				clearInterval(move);
+				moveRight();
+			}
+			else if (direction == 2) {
+				clearInterval(move);
+				moveDown();
+			}
+		}
+		if (isTopRightAngle) {
+			var direction = GenerateRandomNum(1,2);
+			if (direction == 1) {
+				clearInterval(move);
+				moveLeft();
+			}
+			else if (direction == 2) {
+				clearInterval(move);
+				moveDown();
+			}
+		}
+		if (isBottomLeftAngle) {
+			var direction = GenerateRandomNum(1,2);
+			if (direction == 1) {
+				clearInterval(move);
+				moveRight();
+			}
+			else if (direction == 2) {
+				clearInterval(move);
+				moveUp();
+			}
+		}
+		if (isBottomRightAngle) {
+			var direction = GenerateRandomNum(1,2);
+			if (direction == 1) {
+				clearInterval(move);
+				moveLeft();
+			}
+			else if (direction == 2) {
+				clearInterval(move);
+				moveUp();
+			}
+		}
+
+
+		try {
+			/*
+			if (parent.nextElementSibling.classList.contains('tableRow')) {
+				if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')) {
+
+					console.log('внизу стенка');
+
+					var direction = GenerateRandomNum(1,3);
+					if (direction == 1) {
+						clearInterval(move);
+						moveUp();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveRight();
+					}
+					else if (direction == 3) {
+						clearInterval(move);
+						moveLeft();
+					}
+				}
+			}
+			if (parent.previousElementSibling.classList.contains('tableRow')) {
+				if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')) {
+
+					console.log('вверху стенка');
+
+					var direction = GenerateRandomNum(1,3);
+					if (direction == 1) {
+						clearInterval(move);
+						moveDown();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveRight();
+					}
+					else if (direction == 3) {
+						clearInterval(move);
+						moveLeft();
+					}
+				}
+			}
+			*/
+
+
+
+
+
+
+				if ((cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)
+						&& !isBottomLeftAngle
+						&& !isBottomRightAngle) {
+					var direction = GenerateRandomNum(1,3);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveRight();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveLeft();
+					}
+					else if (direction == 3) {
+						clearInterval(move);
+						moveUp();
+					}
+				}
+				if ((cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
+						&& !isTopLeftAngle
+						&& !isTopRightAngle) {
+					var direction = GenerateRandomNum(1,3);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveRight();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveLeft();
+					}
+					else if (direction == 3) {
+						clearInterval(move);
+						moveDown();
+					}
+				}
+				if ((cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)
+						&& !isTopRightAngle
+						&& !isBottomRightAngle
+						&& !(prevBrother.classList.contains('wallCell'))) {
+					var direction = GenerateRandomNum(1,3);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveLeft();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveUp();
+					}
+					else if (direction == 3) {
+						clearInterval(move);
+						moveDown();
+					}
+				}
+				if ((cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)
+						&& !isTopLeftAngle
+						&& !isBottomLeftAngle
+						&& !(nextBrother.classList.contains('wallCell'))) {
+					var direction = GenerateRandomNum(1,3);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveRight();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveUp();
+					}
+					else if (direction == 3) {
+						clearInterval(move);
+						moveDown();
+					}
+				}
+
+
+
+				if (nextBrother.classList.contains('wallCell') && !(prevBrother.classList.contains('wallCell')) && !(cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)) {
+
+					var direction = GenerateRandomNum(1,3);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveLeft();
+					}
+					if (direction == 2) {
+						clearInterval(move);
+						moveUp();
+					}
+					if (direction == 3) {
+						clearInterval(move);
+						moveDown();
+					}
+				}
+				if (prevBrother.classList.contains('wallCell') && !(nextBrother.classList.contains('wallCell')) && !(cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)) {
+					var direction = GenerateRandomNum(1,3);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveRight();
+					}
+					if (direction == 2) {
+						clearInterval(move);
+						moveUp();
+					}
+					if (direction == 3) {
+						clearInterval(move);
+						moveDown();
+					}
+				}
+				if (prevBrother.classList.contains('wallCell') && nextBrother.classList.contains('wallCell')) {
+					var direction = GenerateRandomNum(1,2);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveDown();
+					}
+					if (direction == 2) {
+						clearInterval(move);
+						moveUp();
+					}
+				}
+				if (nextBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
+						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1))) {
+					var direction = GenerateRandomNum(1,2);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveDown();
+					}
+					if (direction == 2) {
+						clearInterval(move);
+						moveLeft();
+					}
+				}
+				if (prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
+						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1))) {
+					var direction = GenerateRandomNum(1,2);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveDown();
+					}
+					if (direction == 2) {
+						clearInterval(move);
+						moveRight();
+					}
+				}
+				if (nextBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)
+						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom))) {
+					var direction = GenerateRandomNum(1,2);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveUp();
+					}
+					if (direction == 2) {
+						clearInterval(move);
+						moveLeft();
+					}
+				}
+				if (prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)
+						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom))) {
+					var direction = GenerateRandomNum(1,2);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveUp();
+					}
+					if (direction == 2) {
+						clearInterval(move);
+						moveRight();
+					}
+				}
+				if (nextBrother.classList.contains('wallCell')
+						&& prevBrother.classList.contains('wallCell')
+						&& (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)) {
+					clearInterval(move);
+					moveDown();
+				}
+				if (nextBrother.classList.contains('wallCell')
+						&& prevBrother.classList.contains('wallCell')
+						&& (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)) {
+					clearInterval(move);
+					moveUp();
+				}
+				if ((cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left) && nextBrother.classList.contains('wallCell')) {
+					var direction = GenerateRandomNum(1,2);
+					if (direction == 1) {
+						clearInterval(move);
+						moveUp();
+					}
+					if (direction == 2) {
+						clearInterval(move);
+						moveDown();
+					}
+				}
+				if ((cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right) && prevBrother.classList.contains('wallCell')) {
+					console.log('helololol');
+
+					var direction = GenerateRandomNum(1,2);
+					if (direction == 1) {
+						clearInterval(move);
+						moveUp();
+					}
+					if (direction == 2) {
+						clearInterval(move);
+						moveDown();
+					}
+				}
+
+
+
+				// если находимся в ячейке, не окруженной стенками
+				if (!(cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)
+						&& !(cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
+						&& !(cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)
+						&& !(cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)
+						&& !(nextBrother.classList.contains('wallCell'))
+						&& !(prevBrother.classList.contains('wallCell'))
+						&& !((nextBrother.classList.contains('wallCell'))&&(prevBrother.classList.contains('wallCell')))
+						&& !(nextBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1))
+						&& !(prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1))
+						&& !(prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom))
+						&& !(nextBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom))
+						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1))
+						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom))) {
+
+					var direction = GenerateRandomNum(1,4);
+					if (direction == 1) {
+						clearInterval(move);
+						moveUp();
+					}
+					if (direction == 2) {
+						clearInterval(move);
+						moveRight();
+					}
+					if (direction == 3) {
+						clearInterval(move);
+						moveLeft();
+
+					}
+					if (direction == 4) {
+						clearInterval(move);
+						moveDown();
+					}
+				}
+
+
+		}
+		catch (ex) {
+			console.log(ex);
+		}
 
 
 

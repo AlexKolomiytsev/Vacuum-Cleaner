@@ -3,7 +3,6 @@
  */
 function drawWall() {
 	var tableCells = document.getElementsByClassName('tableCell');
-	console.log(tableCells);
 
 	for (var i = 0; i < tableCells.length; ++i) {
 		tableCells[i].addEventListener('click', function() {
@@ -15,6 +14,5 @@ function drawWall() {
 		});
 	}
 
-	console.log('end');
 	return false;
 }

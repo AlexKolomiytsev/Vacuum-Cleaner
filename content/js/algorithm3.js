@@ -166,7 +166,7 @@ function algo3() {
 				moveDown();
 			}
 		}
-		else if (isTopRightAngle) {
+		if (isTopRightAngle) {
 			var direction = GenerateRandomNum(1,2);
 			if (direction == 1) {
 				clearInterval(move);
