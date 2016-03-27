@@ -128,8 +128,9 @@ body {
     top: 10%;
 }
 .FAQ3 {
-    top: 55%;
-    left: 30%;
+    top: 22%;
+    left: 11%;
+    font-size: 13px;
 }
 .open {
     display: block;

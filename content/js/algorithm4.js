@@ -27,20 +27,23 @@ function algo4() {
 	var tableCells = document.getElementsByClassName('tableCell');
 
 
-
-	try {
-		for (var i = 0, l = 10; i < l; ++i) {
-			var randomNum = Math.round(0 + Math.random() * (120 - 1));
-			var isGarbage = tableCells[randomNum].hasAttribute("garbage");
-			if (!isGarbage) {
-				tableCells[randomNum].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
-				tableCells[randomNum].setAttribute("garbage", "");
+	function insertGarbage() {
+		try {
+			var tableCells = document.getElementsByClassName('tableCell');
+			for (var i = 0, l = 50; i < l; ++i) {
+				var randomNum = Math.round(0 + Math.random() * (120 - 1));
+				var isGarbage = tableCells[randomNum].hasAttribute("garbage");
+				if (!isGarbage) {
+					tableCells[randomNum].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
+					tableCells[randomNum].setAttribute("garbage", "");
+				}
 			}
 		}
+		catch(ex) {
+			console.log(ex);
+		}
 	}
-	catch(ex) {
-		console.log(ex);
-	}
+
 	//areaWithoutBorders
 	for (var i = 0; i < tableCells.length; i++) {
 		var rand = Math.round(Math.random()*120);
@@ -119,18 +122,23 @@ function algo4() {
 			clearInterval(move);
 			throw new Error('STOP!');
 		}
+		try {
+			counterForAddGargabe += 1;
+			if (counterForAddGargabe % 5 == 0) {
+				var randd = Math.round(1 + Math.random() * (120 - 1));
 
-		counterForAddGargabe += 0.5;
-		if (counterForAddGargabe % 10 == 0) {
-			var randd = Math.round(1 + Math.random() * (120 - 1));
+				var isGarbage = tableCells[randd].hasAttribute('garbage');
 
-			var isGarbage = tableCells[randd].hasAttribute('garbage');
-
-			if (!isGarbage) {
-				tableCells[randd].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
-				tableCells[randd].setAttribute("garbage", "");
+				if (!isGarbage) {
+					tableCells[randd].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
+					tableCells[randd].setAttribute("garbage", "");
+				}
 			}
 		}
+		catch (ex) {
+			console.log(ex);
+		}
+
 
 		var indexOfCurrentCell;
 		for (var op = 0; op < parent.children.length; ++op) {
@@ -146,9 +154,9 @@ function algo4() {
 				&& (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left);
 		var isTopRightAngle = (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
 				&& (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right);
-		var isBottomLeftAngle = (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)
+		var isBottomLeftAngle = (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom)
 				&& (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left);
-		var isBottomRightAngle = (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)
+		var isBottomRightAngle = (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom)
 				&& (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right);
 
 		if (isTopLeftAngle) {
@@ -198,12 +206,94 @@ function algo4() {
 
 
 		try {
-			/*
-			if (parent.nextElementSibling.classList.contains('tableRow')) {
-				if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')) {
 
-					console.log('внизу стенка');
+		//поведение пылесоса под верхней и над нижней стенкой
+			if ((parent.nextElementSibling.classList.contains('tableRow') || parent.previousElementSibling.classList.contains('tableRow'))
+					&& ((nextBrother || prevBrother) || (nextBrother && prevBrother) )) {
 
+
+				if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)) {
+					console.log('wallUp - border right');
+					var direction = GenerateRandomNum(1,2);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveDown();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveLeft();
+					}
+				}
+				if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)) {
+
+					console.log('wallDown - border right');
+
+					var direction = GenerateRandomNum(1,2);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveUp();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveLeft();
+					}
+				}
+				if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)) {
+
+					console.log('wallDown - border left');
+
+					var direction = GenerateRandomNum(1,2);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveUp();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveRight();
+					}
+				}
+				if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)) {
+
+					console.log('wallUp - border left');
+
+					var direction = GenerateRandomNum(1,2);
+
+					if (direction == 1) {
+						clearInterval(move);
+						moveDown();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveRight();
+					}
+				}
+
+
+				//console.log('wall Up - right: '
+				//		+ parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+				//		+ ' - ' + (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right));
+				//console.log('wall Down - right: '
+				//		+ parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+				//		+ ' -- cell.right = ' + cell.getBoundingClientRect().right
+				//		+ ' -- tbody.right = ' + tableBody.getBoundingClientRect().right);
+
+				if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& !parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& !nextBrother.classList.contains('wallCell')
+						&& !prevBrother.classList.contains('wallCell')
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)
+						&& !(cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)) {
 					var direction = GenerateRandomNum(1,3);
 					if (direction == 1) {
 						clearInterval(move);
@@ -218,12 +308,17 @@ function algo4() {
 						moveLeft();
 					}
 				}
-			}
-			if (parent.previousElementSibling.classList.contains('tableRow')) {
-				if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')) {
-
-					console.log('вверху стенка');
-
+				if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& !parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& !nextBrother.classList.contains('wallCell')
+						&& !prevBrother.classList.contains('wallCell')
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)
+						&& !(cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)
+				) {
 					var direction = GenerateRandomNum(1,3);
 					if (direction == 1) {
 						clearInterval(move);
@@ -237,18 +332,179 @@ function algo4() {
 						clearInterval(move);
 						moveLeft();
 					}
+
 				}
-			}
-			*/
+				if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+				) {
+					var direction = GenerateRandomNum(1,2);
+					if (direction == 1) {
+						clearInterval(move);
+						moveLeft();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveRight();
+					}
+				}
+				if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& nextBrother.classList.contains('wallCell')
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+				) {
 
+					var direction = GenerateRandomNum(1,2);
+					if (direction == 1) {
+						clearInterval(move);
+						moveLeft();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveDown();
+					}
+				}
+				if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& prevBrother.classList.contains('wallCell')
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+				) {
 
+					var direction = GenerateRandomNum(1,2);
+					if (direction == 1) {
+						clearInterval(move);
+						moveRight();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveDown();
+					}
+				}
+				if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& nextBrother.classList.contains('wallCell')
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+				) {
 
+					var direction = GenerateRandomNum(1,2);
+					if (direction == 1) {
+						clearInterval(move);
+						moveLeft();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveUp();
+					}
+				}
+				if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& prevBrother.classList.contains('wallCell')
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+				) {
 
+					var direction = GenerateRandomNum(1,2);
+					if (direction == 1) {
+						clearInterval(move);
+						moveRight();
+					}
+					else if (direction == 2) {
+						clearInterval(move);
+						moveUp();
+					}
+				}
+				if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& nextBrother.classList.contains('wallCell')
+						&& prevBrother.classList.contains('wallCell')) {
+						clearInterval(move);
+						moveUp();
+				}
+				if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& nextBrother.classList.contains('wallCell')) {
+						clearInterval(move);
+						moveLeft();
+				}
+				if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& prevBrother.classList.contains('wallCell')) {
+						clearInterval(move);
+						moveRight();
+				}
+				if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& nextBrother.classList.contains('wallCell')
+						&& prevBrother.classList.contains('wallCell')) {
+						clearInterval(move);
+						moveDown();
+				}
 
+				if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
+						&& !isTopLeftAngle
+						&& !isTopRightAngle) {
 
-				if ((cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)
+					var direction = GenerateRandomNum(1,2);
+
+						if (direction == 1) {
+							clearInterval(move);
+							moveRight();
+						}
+						else if (direction == 2) {
+							clearInterval(move);
+							moveLeft();
+						}
+				}
+				if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom)
 						&& !isBottomLeftAngle
 						&& !isBottomRightAngle) {
+
+						var direction = GenerateRandomNum(1,2);
+
+						if (direction == 1) {
+							clearInterval(move);
+							moveRight();
+						}
+						else if (direction == 2) {
+							clearInterval(move);
+							moveLeft();
+						}
+				}
+
+
+
+
+			}
+
+
+		//-----------------------------
+		//&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+		//&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell'))
+		//&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+		//&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+
+		//-----------------------------
+
+
+
+
+
+
+
+				if ((cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom)
+						&& !isBottomLeftAngle
+						&& !isBottomRightAngle
+						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom) )) {
 					var direction = GenerateRandomNum(1,3);
 
 					if (direction == 1) {
@@ -266,7 +522,8 @@ function algo4() {
 				}
 				if ((cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
 						&& !isTopLeftAngle
-						&& !isTopRightAngle) {
+						&& !isTopRightAngle
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1))) {
 					var direction = GenerateRandomNum(1,3);
 
 					if (direction == 1) {
@@ -285,7 +542,9 @@ function algo4() {
 				if ((cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)
 						&& !isTopRightAngle
 						&& !isBottomRightAngle
-						&& !(prevBrother.classList.contains('wallCell'))) {
+						&& !(prevBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right))
+						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right))) {
 					var direction = GenerateRandomNum(1,3);
 
 					if (direction == 1) {
@@ -304,7 +563,9 @@ function algo4() {
 				if ((cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)
 						&& !isTopLeftAngle
 						&& !isBottomLeftAngle
-						&& !(nextBrother.classList.contains('wallCell'))) {
+						&& !(nextBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left))
+						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left))) {
 					var direction = GenerateRandomNum(1,3);
 
 					if (direction == 1) {
@@ -323,7 +584,18 @@ function algo4() {
 
 
 
-				if (nextBrother.classList.contains('wallCell') && !(prevBrother.classList.contains('wallCell')) && !(cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)) {
+				if (nextBrother.classList.contains('wallCell')
+						&& !(prevBrother.classList.contains('wallCell'))
+						&& !(cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)
+						&& !parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& !parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+				) {
+
+					console.log('next brother');
 
 					var direction = GenerateRandomNum(1,3);
 
@@ -340,7 +612,19 @@ function algo4() {
 						moveDown();
 					}
 				}
-				if (prevBrother.classList.contains('wallCell') && !(nextBrother.classList.contains('wallCell')) && !(cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)) {
+				if (prevBrother.classList.contains('wallCell')
+						&& !(nextBrother.classList.contains('wallCell'))
+						&& !(cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)
+						&& !parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& !parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+				) {
+
+					console.log('prev brother');
+
 					var direction = GenerateRandomNum(1,3);
 
 					if (direction == 1) {
@@ -356,7 +640,12 @@ function algo4() {
 						moveDown();
 					}
 				}
-				if (prevBrother.classList.contains('wallCell') && nextBrother.classList.contains('wallCell')) {
+				if (prevBrother.classList.contains('wallCell') && nextBrother.classList.contains('wallCell')
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell'))
+						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
+				) {
 					var direction = GenerateRandomNum(1,2);
 
 					if (direction == 1) {
@@ -394,8 +683,8 @@ function algo4() {
 						moveRight();
 					}
 				}
-				if (nextBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)
-						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom))) {
+				if (nextBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom)
+						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom))) {
 					var direction = GenerateRandomNum(1,2);
 
 					if (direction == 1) {
@@ -407,8 +696,8 @@ function algo4() {
 						moveLeft();
 					}
 				}
-				if (prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)
-						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom))) {
+				if (prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom)
+						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom))) {
 					var direction = GenerateRandomNum(1,2);
 
 					if (direction == 1) {
@@ -428,7 +717,7 @@ function algo4() {
 				}
 				if (nextBrother.classList.contains('wallCell')
 						&& prevBrother.classList.contains('wallCell')
-						&& (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)) {
+						&& (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom)) {
 					clearInterval(move);
 					moveUp();
 				}
@@ -460,7 +749,7 @@ function algo4() {
 
 
 				// если находимся в ячейке, не окруженной стенками
-				if (!(cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom)
+				if (!(cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom)
 						&& !(cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
 						&& !(cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)
 						&& !(cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)
@@ -469,10 +758,13 @@ function algo4() {
 						&& !((nextBrother.classList.contains('wallCell'))&&(prevBrother.classList.contains('wallCell')))
 						&& !(nextBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1))
 						&& !(prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1))
-						&& !(prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom))
-						&& !(nextBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom))
+						&& !(prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom))
+						&& !(nextBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom))
 						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1))
-						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom == tableBody.getBoundingClientRect().bottom))) {
+						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom))
+						&& !parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
+						&& !parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')) {
+
 
 					var direction = GenerateRandomNum(1,4);
 					if (direction == 1) {
@@ -520,7 +812,7 @@ function algo4() {
 			left += 1;
 			cleaner.style.left = left+'px';
 			for (var i = 0; i < tableCells.length; ++i) {
-				if (cleanerTrue.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1
+				if (cleanerTrue.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left
 					&& cleanerTrue.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top
 					&& cleanerTrue.getBoundingClientRect().bottom+2 == tableCells[i].getBoundingClientRect().bottom) {
 
@@ -537,7 +829,7 @@ function algo4() {
 			cleaner.style.left = left+'px';
 
 			for (var i = 0; i < tableCells.length; ++i) {
-				if (cleanerTrue.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1
+				if (cleanerTrue.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left
 					&& cleanerTrue.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top
 					&& cleanerTrue.getBoundingClientRect().bottom+2 == tableCells[i].getBoundingClientRect().bottom) {
 
@@ -554,7 +846,7 @@ function algo4() {
 			cleaner.style.top = top+'px';
 
 			for (var i = 0; i < tableCells.length; ++i) {
-				if (cleanerTrue.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1
+				if (cleanerTrue.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left
 					&& cleanerTrue.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top
 					&& cleanerTrue.getBoundingClientRect().bottom+2 == tableCells[i].getBoundingClientRect().bottom) {
 
@@ -571,7 +863,7 @@ function algo4() {
 			cleaner.style.top = top+'px';
 
 			for (var i = 0; i < tableCells.length; ++i) {
-				if (cleanerTrue.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left+1
+				if (cleanerTrue.getBoundingClientRect().left == tableCells[i].getBoundingClientRect().left
 					&& cleanerTrue.getBoundingClientRect().top == tableCells[i].getBoundingClientRect().top
 					&& cleanerTrue.getBoundingClientRect().bottom+2 == tableCells[i].getBoundingClientRect().bottom) {
 
@@ -602,6 +894,10 @@ function algo4() {
 	var btnStart = document.getElementsByClassName('btn-start')[0];
 	var btnStop = document.getElementsByClassName('btn-stop')[0];
 	var btnRetry = document.getElementsByClassName('btn-retry')[0];
+	var btnDropGarb = document.getElementsByClassName('btn-dropGarb')[0];
+
+	btnDropGarb.addEventListener('click', insertGarbage);
+
 	btnStart.addEventListener('click', function() {
 		deactiveItems(btnNav);
 		this.classList.add('active');

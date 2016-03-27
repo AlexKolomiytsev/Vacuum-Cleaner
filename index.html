@@ -28,12 +28,20 @@
           Выберите алгоритм <span class="glyphicon glyphicon-arrow-right"></span>
       </div>
       <div class="FAQ3">
-          Нажмите Start <span class="glyphicon glyphicon-arrow-right"></span>
+          <ul>
+              <li>Нарисуйте карту</li>
+              <li>Виставте количество допустимых шагов(Remaining steps)</li>
+              <li>Нажмите Drop garbage</li>
+              <li>Нажмите Start</li>
+          </ul>
       </div>
       <div class="btn-group buttonsNav">
           <button class="btn btn-primary btn-start btn-nav">Start</button>
           <button class="btn btn-primary btn-stop btn-nav">Pause</button>
           <button class="btn btn-primary btn-retry btn-nav">Retry</button>
+          <div class="btn-group">
+              <button class="btn btn-info btn-dropGarb">Drop garbage</button>
+          </div>
       </div>
       <div class="btn-group chooseAlgorithm1">
           <button class="btn btn-default algo1 algoo1" data-algo="algo1">Последовательно</button>
@@ -42,7 +50,7 @@
       </div>
       <div class="btn-group chooseAlgorithm2">
           <button class="btn btn-default algo4 algoo2" data-algo="algo4">Рефлексный</button>
-          <button class="btn btn-default algo5 algoo2" id="vpm" data-algo="algo5" data-toggle="tooltip" data-placement="bottom" data-original-title="Внутренне представление мира">ВПМ</button>
+          <button class="btn btn-default algo5 algoo2" id="vpm" data-algo="algo5" data-toggle="tooltip" data-placement="right" data-original-title="Внутреннее представление мира">ВПМ</button>
       </div>
       <div class="list-group chooseMap">
           <a href="#" class="list-group-item" id="map1" data-stem="map1"> Map 1</a>
