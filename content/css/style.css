@@ -31,7 +31,7 @@ body {
     height: 66px;
 }
 .wallCell, .wallCell1, .wallCell2, .wallCell3 {
-    background: #423737;
+    background: #6163D3;
     border: 2px solid #423737;
     width: 66px;
     height: 66px;
@@ -132,9 +132,18 @@ body {
     left: 11%;
     font-size: 13px;
 }
+
+.iwashere {
+    background-color: #40514E;
+}
+
 .open {
     display: block;
 }
+
+
+
+
 
 
 .alert {

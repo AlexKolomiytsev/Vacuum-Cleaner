@@ -105,6 +105,7 @@ function algo5() {
 
 
 	var numOfGarbage = 0;
+	var isRandomBehavior;
 	function sensors(tableCell) {
 		var cell = tableCell;
 		var nextBrother = cell.nextElementSibling; // следующая ячейка
@@ -129,30 +130,6 @@ function algo5() {
 			}
 		}
 
-		var isRandomBehavior = true;
-		var brain = (function()  {
-			var iwashere = cell.getAttribute('iwashere');
-			if(iwashere) {
-				cell.style.backgroundColor = '#F98B60';
-			}
-
-			try {
-				var iwashereUp = parent.previousElementSibling.children[indexOfCurrentCell].getAttribute('iwashere');
-				var iwashereDown = parent.nextElementSibling.children[indexOfCurrentCell].getAttribute('iwashere');
-				var iwashereLeft = prevBrother.getAttribute('iwashere');
-				var iwashereRight = nextBrother.getAttribute('iwashere');
-
-				console.log('up - ' + iwashereUp);
-				console.log('down - ' + iwashereDown);
-				console.log('left - ' + iwashereLeft);
-				console.log('right - ' + iwashereRight);
-			}
-			catch (ex) {
-				console.log(ex);
-			}
-
-
-		})();
 
 
 		stepsInput.value = --steps;
@@ -160,29 +137,59 @@ function algo5() {
 			clearInterval(move);
 			throw new Error('STOP!');
 		}
-		try {
-			counterForAddGargabe += 1;
-			if (counterForAddGargabe % 5 == 0) {
-				var randd = Math.round(1 + Math.random() * (120 - 1));
+		//try {
+		//	counterForAddGargabe += 1;
+		//	if (counterForAddGargabe % 5 == 0) {
+		//		var randd = Math.round(1 + Math.random() * (120 - 1));
+//
+		//		var isGarbage = tableCells[randd].hasAttribute('garbage');
+//
+		//		if (!isGarbage) {
+		//			tableCells[randd].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
+		//			tableCells[randd].setAttribute("garbage", "");
+		//			tableCells[randd].setAttribute("iwashere","false");
+//
+		//			tableCells[randd].classList.remove('iwashere');
+		//			tableCells[randd].classList.add('tableCell');
+		//		}
+		//	}
+		//}
+		//catch (ex) {
+		//	console.log(ex);
+		//}
 
-				var isGarbage = tableCells[randd].hasAttribute('garbage');
 
-				if (!isGarbage) {
-					tableCells[randd].insertAdjacentHTML('beforeEnd', '<img class="musor" src="content/images/garbage.png" alt="" width="60">');
-					tableCells[randd].setAttribute("garbage", "");
-					tableCells[randd].setAttribute("iwashere","false");
-					tableCells[randd].style.backgroundColor = '#5D5D5D';
-				}
+
+
+		randomBehavior();
+		var goAway;
+
+		function randomBehavior() {
+
+			// ::::::::::::::::::: BRAIN ::::::::::::::::::::::::
+
+			try {
+				var iwashereUp = parent.previousElementSibling.children[indexOfCurrentCell].getAttribute('iwashere');
+				var iwashereDown = parent.nextElementSibling.children[indexOfCurrentCell].getAttribute('iwashere');
+				var iwashereLeft = prevBrother.getAttribute('iwashere');
+				var iwashereRight = nextBrother.getAttribute('iwashere');
 			}
-		}
-		catch (ex) {
-			console.log(ex);
-		}
+			catch (ex) {
+				console.log(ex);
+			}
+
+			var iwashere = cell.getAttribute('iwashere');
+			if(iwashere) {
+				cell.classList.add('iwashere');
+			}
 
 
 
 
-		if(isRandomBehavior) {
+
+			// ::::::::::::::::::: ^^^ BRAIN ^^^ ::::::::::::::::::::::::
+
+
 			var isTopLeftAngle = (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
 					&& (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left);
 			var isTopRightAngle = (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
@@ -193,6 +200,7 @@ function algo5() {
 					&& (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right);
 
 			if (isTopLeftAngle) {
+				goAway = true;
 				var direction = GenerateRandomNum(1,2);
 				if (direction == 1) {
 					clearInterval(move);
@@ -204,6 +212,7 @@ function algo5() {
 				}
 			}
 			if (isTopRightAngle) {
+				goAway = true;
 				var direction = GenerateRandomNum(1,2);
 				if (direction == 1) {
 					clearInterval(move);
@@ -215,6 +224,7 @@ function algo5() {
 				}
 			}
 			if (isBottomLeftAngle) {
+				goAway = true;
 				var direction = GenerateRandomNum(1,2);
 				if (direction == 1) {
 					clearInterval(move);
@@ -226,6 +236,7 @@ function algo5() {
 				}
 			}
 			if (isBottomRightAngle) {
+				goAway = true;
 				var direction = GenerateRandomNum(1,2);
 				if (direction == 1) {
 					clearInterval(move);
@@ -247,7 +258,7 @@ function algo5() {
 
 					if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
 							&& (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)) {
-						console.log('wallUp - border right');
+						goAway = true;
 						var direction = GenerateRandomNum(1,2);
 
 						if (direction == 1) {
@@ -262,7 +273,7 @@ function algo5() {
 					if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
 							&& (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)) {
 
-						console.log('wallDown - border right');
+						goAway = true;
 
 						var direction = GenerateRandomNum(1,2);
 
@@ -278,7 +289,7 @@ function algo5() {
 					if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
 							&& (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)) {
 
-						console.log('wallDown - border left');
+						goAway = true;
 
 						var direction = GenerateRandomNum(1,2);
 
@@ -294,7 +305,7 @@ function algo5() {
 					if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
 							&& (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)) {
 
-						console.log('wallUp - border left');
+						goAway = true;
 
 						var direction = GenerateRandomNum(1,2);
 
@@ -327,6 +338,7 @@ function algo5() {
 							&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 							&& !(cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)
 							&& !(cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)) {
+						goAway = true;
 						var direction = GenerateRandomNum(1,3);
 						if (direction == 1) {
 							clearInterval(move);
@@ -352,6 +364,7 @@ function algo5() {
 							&& !(cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right)
 							&& !(cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left)
 					) {
+						goAway = true;
 						var direction = GenerateRandomNum(1,3);
 						if (direction == 1) {
 							clearInterval(move);
@@ -374,6 +387,7 @@ function algo5() {
 							&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 							&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 					) {
+						goAway = true;
 						var direction = GenerateRandomNum(1,2);
 						if (direction == 1) {
 							clearInterval(move);
@@ -391,7 +405,7 @@ function algo5() {
 							&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 							&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 					) {
-
+						goAway = true;
 						var direction = GenerateRandomNum(1,2);
 						if (direction == 1) {
 							clearInterval(move);
@@ -409,7 +423,7 @@ function algo5() {
 							&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 							&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 					) {
-
+						goAway = true;
 						var direction = GenerateRandomNum(1,2);
 						if (direction == 1) {
 							clearInterval(move);
@@ -427,7 +441,7 @@ function algo5() {
 							&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 							&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 					) {
-
+						goAway = true;
 						var direction = GenerateRandomNum(1,2);
 						if (direction == 1) {
 							clearInterval(move);
@@ -445,7 +459,7 @@ function algo5() {
 							&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 							&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 					) {
-
+						goAway = true;
 						var direction = GenerateRandomNum(1,2);
 						if (direction == 1) {
 							clearInterval(move);
@@ -459,24 +473,28 @@ function algo5() {
 					if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
 							&& nextBrother.classList.contains('wallCell')
 							&& prevBrother.classList.contains('wallCell')) {
+						goAway = true;
 						clearInterval(move);
 						moveUp();
 					}
 					if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
 							&& parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
 							&& nextBrother.classList.contains('wallCell')) {
+						goAway = true;
 						clearInterval(move);
 						moveLeft();
 					}
 					if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
 							&& parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
 							&& prevBrother.classList.contains('wallCell')) {
+						goAway = true;
 						clearInterval(move);
 						moveRight();
 					}
 					if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
 							&& nextBrother.classList.contains('wallCell')
 							&& prevBrother.classList.contains('wallCell')) {
+						goAway = true;
 						clearInterval(move);
 						moveDown();
 					}
@@ -485,6 +503,7 @@ function algo5() {
 							&& (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
 							&& !isTopLeftAngle
 							&& !isTopRightAngle) {
+						goAway = true;
 
 						var direction = GenerateRandomNum(1,2);
 
@@ -501,6 +520,8 @@ function algo5() {
 							&& (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom)
 							&& !isBottomLeftAngle
 							&& !isBottomRightAngle) {
+
+						goAway = true;
 
 						var direction = GenerateRandomNum(1,2);
 
@@ -538,6 +559,8 @@ function algo5() {
 						&& !isBottomLeftAngle
 						&& !isBottomRightAngle
 						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom) )) {
+					goAway = true;
+
 					var direction = GenerateRandomNum(1,3);
 
 					if (direction == 1) {
@@ -557,6 +580,8 @@ function algo5() {
 						&& !isTopLeftAngle
 						&& !isTopRightAngle
 						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1))) {
+					goAway = true;
+
 					var direction = GenerateRandomNum(1,3);
 
 					if (direction == 1) {
@@ -578,6 +603,8 @@ function algo5() {
 						&& !(prevBrother.classList.contains('wallCell'))
 						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right))
 						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && (cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right))) {
+					goAway = true;
+
 					var direction = GenerateRandomNum(1,3);
 
 					if (direction == 1) {
@@ -599,6 +626,8 @@ function algo5() {
 						&& !(nextBrother.classList.contains('wallCell'))
 						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left))
 						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && (cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left))) {
+					goAway = true;
+
 					var direction = GenerateRandomNum(1,3);
 
 					if (direction == 1) {
@@ -628,7 +657,7 @@ function algo5() {
 						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 				) {
 
-					console.log('next brother');
+					goAway = true;
 
 					var direction = GenerateRandomNum(1,3);
 
@@ -656,7 +685,7 @@ function algo5() {
 						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 				) {
 
-					console.log('prev brother');
+					goAway = true;
 
 					var direction = GenerateRandomNum(1,3);
 
@@ -679,6 +708,8 @@ function algo5() {
 						&& !(parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 						&& !(parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell') && nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell'))
 				) {
+					goAway = true;
+
 					var direction = GenerateRandomNum(1,2);
 
 					if (direction == 1) {
@@ -692,6 +723,8 @@ function algo5() {
 				}
 				if (nextBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
 						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1))) {
+					goAway = true;
+
 					var direction = GenerateRandomNum(1,2);
 
 					if (direction == 1) {
@@ -705,6 +738,8 @@ function algo5() {
 				}
 				if (prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)
 						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1))) {
+
+					goAway = true;
 					var direction = GenerateRandomNum(1,2);
 
 					if (direction == 1) {
@@ -718,6 +753,8 @@ function algo5() {
 				}
 				if (nextBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom)
 						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom))) {
+					goAway = true;
+
 					var direction = GenerateRandomNum(1,2);
 
 					if (direction == 1) {
@@ -731,6 +768,8 @@ function algo5() {
 				}
 				if (prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom)
 						&& !(nextBrother.classList.contains('wallCell') && prevBrother.classList.contains('wallCell') && (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom))) {
+					goAway = true;
+
 					var direction = GenerateRandomNum(1,2);
 
 					if (direction == 1) {
@@ -745,16 +784,22 @@ function algo5() {
 				if (nextBrother.classList.contains('wallCell')
 						&& prevBrother.classList.contains('wallCell')
 						&& (cell.getBoundingClientRect().top == tableBody.getBoundingClientRect().top+1)) {
+					goAway = true;
+
 					clearInterval(move);
 					moveDown();
 				}
 				if (nextBrother.classList.contains('wallCell')
 						&& prevBrother.classList.contains('wallCell')
 						&& (cell.getBoundingClientRect().bottom+1 == tableBody.getBoundingClientRect().bottom)) {
+					goAway = true;
+
 					clearInterval(move);
 					moveUp();
 				}
 				if ((cell.getBoundingClientRect().left == tableBody.getBoundingClientRect().left) && nextBrother.classList.contains('wallCell')) {
+					goAway = true;
+
 					var direction = GenerateRandomNum(1,2);
 					if (direction == 1) {
 						clearInterval(move);
@@ -766,7 +811,7 @@ function algo5() {
 					}
 				}
 				if ((cell.getBoundingClientRect().right == tableBody.getBoundingClientRect().right) && prevBrother.classList.contains('wallCell')) {
-					console.log('helololol');
+					goAway = true;
 
 					var direction = GenerateRandomNum(1,2);
 					if (direction == 1) {
@@ -798,24 +843,276 @@ function algo5() {
 						&& !parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')
 						&& !parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')) {
 
+					goAway = false;
 
-					var direction = GenerateRandomNum(1,4);
-					if (direction == 1) {
-						clearInterval(move);
-						moveUp();
-					}
-					if (direction == 2) {
-						clearInterval(move);
-						moveRight();
-					}
-					if (direction == 3) {
-						clearInterval(move);
-						moveLeft();
+
+					if ((iwashereUp == 'true' && iwashereDown == 'true' && iwashereLeft == 'true' && iwashereRight == 'true')
+							&& !goAway) {
+
+						var goLeft = false;
+						var goRight = false;
+						var goUp = false;
+						var goDown = false;
+
+						var indexOfParentRow;
+
+						for (var c = 0; c < 9; ++c) {
+							if (parent.parentNode.children[c].children[indexOfCurrentCell] == cell) {
+								indexOfParentRow = c-2;
+								break;
+							}
+						}
+
+
+						for (var c = indexOfParentRow; c >= 2; c--) {
+							if (parent.previousElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')) {
+								break;
+							}
+							else if (parent.parentNode.children[c].children[indexOfCurrentCell].getAttribute('iwashere') == 'false') {
+								goUp = true;
+								break;
+							}
+						}
+						for (var c = indexOfParentRow; c < 9; c++) {
+							if (parent.nextElementSibling.children[indexOfCurrentCell].classList.contains('wallCell')) {
+								break;
+							}
+							if (parent.parentNode.children[c].children[indexOfCurrentCell].getAttribute('iwashere') == 'false') {
+								goDown = true;
+								break;
+							}
+						}
+
+
+						for (var c = indexOfCurrentCell; c >= 0; c--) {
+							if (prevBrother.classList.contains('wallCell')) break;
+							else if (parent.children[c].getAttribute('iwashere') == 'false') {
+								goLeft = true;
+								break;
+							}
+						}
+						for (var c = indexOfCurrentCell; c < 20; c++) {
+							if (nextBrother.classList.contains('wallCell')) break;
+							else if (parent.children[c].getAttribute('iwashere') == 'false') {
+								goRight = true;
+								break;
+							}
+						}
+
+						if (goUp && goDown && goLeft && goRight) {
+							var direction = GenerateRandomNum(1,4);
+
+							if (direction == 1) {
+								clearInterval(move);
+								moveLeft();
+							}
+							else if (direction == 2) {
+								clearInterval(move);
+								moveRight();
+							}
+							else if (direction == 3) {
+								clearInterval(move);
+								moveUp();
+							}
+							else if (direction == 4) {
+								clearInterval(move);
+								moveDown();
+							}
+						}
+						else if (goUp && !goDown && !goLeft && !goRight) {
+							clearInterval(move);
+							moveUp();
+						}
+						else if (!goUp && goDown && !goLeft && !goRight) {
+							clearInterval(move);
+							moveDown();
+						}
+						else if (!goUp && !goDown && goLeft && !goRight) {
+							clearInterval(move);
+							moveLeft();
+						}
+						else if (!goUp && !goDown && !goLeft && goRight) {
+							clearInterval(move);
+							moveRight();
+						}
+						else if (goUp && goDown && !goLeft && !goRight) {
+							var direction = GenerateRandomNum(1,2);
+
+							if (direction == 1) {
+								clearInterval(move);
+								moveUp();
+							}
+							else if (direction == 2) {
+								clearInterval(move);
+								moveDown();
+							}
+						}
+						else if (!goUp && goDown && goLeft && !goRight) {
+							var direction = GenerateRandomNum(1,2);
+
+							if (direction == 1) {
+								clearInterval(move);
+								moveLeft();
+							}
+							else if (direction == 2) {
+								clearInterval(move);
+								moveDown();
+							}
+						}
+						else if (!goUp && !goDown && goLeft && goRight) {
+							var direction = GenerateRandomNum(1,2);
+
+							if (direction == 1) {
+								clearInterval(move);
+								moveLeft();
+							}
+							else if (direction == 2) {
+								clearInterval(move);
+								moveRight();
+							}
+						}
+						else if (goUp && !goDown && !goLeft && goRight) {
+							var direction = GenerateRandomNum(1,2);
+
+							if (direction == 1) {
+								clearInterval(move);
+								moveUp();
+							}
+							else if (direction == 2) {
+								clearInterval(move);
+								moveRight();
+							}
+						}
+						else if (goUp && !goDown && goLeft && !goRight) {
+							var direction = GenerateRandomNum(1,2);
+
+							if (direction == 1) {
+								clearInterval(move);
+								moveUp();
+							}
+							else if (direction == 2) {
+								clearInterval(move);
+								moveLeft();
+							}
+						}
+						else if (!goUp && goDown && !goLeft && goRight) {
+							var direction = GenerateRandomNum(1,2);
+
+							if (direction == 1) {
+								clearInterval(move);
+								moveDown();
+							}
+							else if (direction == 2) {
+								clearInterval(move);
+								moveRight();
+							}
+						}
+						else if (goUp && goDown && goLeft && !goRight) {
+							var direction = GenerateRandomNum(1,3);
+
+							if (direction == 1) {
+								clearInterval(move);
+								moveDown();
+							}
+							else if (direction == 2) {
+								clearInterval(move);
+								moveUp();
+							}
+							else if (direction == 3) {
+								clearInterval(move);
+								moveLeft();
+							}
+						}
+						else if (!goUp && goDown && goLeft && goRight) {
+							var direction = GenerateRandomNum(1,3);
+
+							if (direction == 1) {
+								clearInterval(move);
+								moveDown();
+							}
+							else if (direction == 2) {
+								clearInterval(move);
+								moveRight();
+							}
+							else if (direction == 3) {
+								clearInterval(move);
+								moveLeft();
+							}
+						}
+						else if (goUp && !goDown && goLeft && goRight) {
+							var direction = GenerateRandomNum(1,3);
+
+							if (direction == 1) {
+								clearInterval(move);
+								moveUp();
+							}
+							else if (direction == 2) {
+								clearInterval(move);
+								moveRight();
+							}
+							else if (direction == 3) {
+								clearInterval(move);
+								moveLeft();
+							}
+						}
+						else if (goUp && goDown && !goLeft && goRight) {
+							var direction = GenerateRandomNum(1,3);
+
+							if (direction == 1) {
+								clearInterval(move);
+								moveDown();
+							}
+							else if (direction == 2) {
+								clearInterval(move);
+								moveRight();
+							}
+							else if (direction == 3) {
+								clearInterval(move);
+								moveUp();
+							}
+						}
+
+						//if (goUp) {
+						//	console.log('go to the top');
+						//	clearInterval(move);
+						//	moveUp();
+						//}
+						//else if (goDown) {
+						//	console.log('go to the bottom');
+						//	clearInterval(move);
+						//	moveDown();
+						//}
+						//else if (goLeft) {
+						//	console.log('go to left');
+						//	clearInterval(move);
+						//	moveLeft();
+						//}
+						//else if (goRight) {
+						//	console.log('go to right');
+						//	clearInterval(move);
+						//	moveRight();
+						//}
 
 					}
-					if (direction == 4) {
-						clearInterval(move);
-						moveDown();
+					else {
+						var direction = GenerateRandomNum(1,4);
+						if (direction == 1) {
+							clearInterval(move);
+							moveUp();
+						}
+						if (direction == 2) {
+							clearInterval(move);
+							moveRight();
+						}
+						if (direction == 3) {
+							clearInterval(move);
+							moveLeft();
+
+						}
+						if (direction == 4) {
+							clearInterval(move);
+							moveDown();
+						}
 					}
 				}
 

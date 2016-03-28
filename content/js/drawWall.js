@@ -9,6 +9,7 @@ function drawWall() {
 			if (!this.children.length > 0) {
 				this.classList.toggle('tableCell');
 				this.classList.toggle('wallCell');
+				this.classList.remove('iwashere');
 			}
 
 		});
