@@ -1,0 +1,25 @@
+
+
+.header {
+    border-bottom: 3px solid #9acfea;
+}
+.content {
+
+}
+.content h5 {
+    font-size: 25px;
+    font-weight: 700;
+}
+.content .row {
+    padding-bottom: 30px;
+    padding-top: 35px;
+    border-bottom: 1px solid #cccccc;
+}
+
+.row.descr {
+    margin: 0px 15px 0px 15px;
+}
+.list-group-item h6 {
+    font-size: 15px;
+    font-weight: 600;
+}

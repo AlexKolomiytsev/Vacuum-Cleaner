@@ -127,7 +127,7 @@ function algo2() {
 						throw new Error('STOP!');
 					}
 
-					counterForAddGargabe += 0.5;
+					/*counterForAddGargabe += 0.5;
 					if (counterForAddGargabe % 10 == 0) {
 						try {
 							for (var i = 0, l = 1; i < l; ++i) {
@@ -142,7 +142,7 @@ function algo2() {
 						catch(ex) {
 							console.log(ex);
 						}
-					}
+					}*/
 
 
 					//определяем к какой области принадлежит текущая йчейка
@@ -778,7 +778,7 @@ function algo2() {
 						}
 
 
-						counterForAddGargabe += 0.5;
+						/*counterForAddGargabe += 0.5;
 						if (counterForAddGargabe % 10 == 0) {
 							try {
 								for (var i = 0, l = 1; i < l; ++i) {
@@ -793,7 +793,7 @@ function algo2() {
 							catch(ex) {
 								console.log(ex);
 							}
-						}
+						}*/
 
 						//определяем к какой области принадлежит текущая йчейка
 						var arrOfAreas = ['setBeforeWall1', 'setAfterWall1', 'setWithoutWall', 'setAfterWall3']
@@ -1466,7 +1466,7 @@ function algo2() {
 						throw new Error('STOP!');
 					}
 
-					counterForAddGargabe += 0.5;
+					/*counterForAddGargabe += 0.5;
 					if (counterForAddGargabe % 10 == 0) {
 						try {
 							for (var i = 0, l = 1; i < l; ++i) {
@@ -1481,7 +1481,7 @@ function algo2() {
 						catch(ex) {
 							console.log(ex);
 						}
-					}
+					}*/
 
 					//определяем к какой области принадлежит текущая йчейка
 					var arrOfAreas = ['setBeforeWall1', 'setAfterWall1', 'setWithoutWall', 'setAfterWall3']
@@ -2086,7 +2086,7 @@ function algo2() {
 						throw new Error('STOP!');
 					}
 
-					counterForAddGargabe += 0.5;
+					/*counterForAddGargabe += 0.5;
 					if (counterForAddGargabe % 10 == 0) {
 						try {
 							for (var i = 0, l = 1; i < l; ++i) {
@@ -2101,7 +2101,7 @@ function algo2() {
 						catch(ex) {
 							console.log(ex);
 						}
-					}
+					}*/
 
 					//определяем к какой области принадлежит текущая йчейка
 					var arrOfAreas = ['setBeforeWall1', 'setAfterWall1', 'setWithoutWall', 'setAfterWall3']

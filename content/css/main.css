@@ -50,11 +50,12 @@ body {
     display: none;
     position: absolute;
     top: 0%;
-
+    width: 270px;
     right: 0px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     height: 110px;
     background-color: #5D5D5D;
+
 }
 
 .finish {
@@ -138,6 +139,16 @@ body {
 }
 .igotoyou {
     background-color: #FA5555;
+}
+.btn-descript {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: #9acfea;
+}
+.btn.btn-descript:hover {
+    color: #ffffff;
+    background-color: #9acfea;
 }
 .open {
     display: block;

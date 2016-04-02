@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Vacuum Cleaner</title>
     <link rel="stylesheet" href="content/css/external/reset.css">
 
-    <link rel="stylesheet" href="content/bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="content/css/style.css">
+    <link rel="stylesheet" href="content/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="content/css/main.css">
     <script src="content/bower_components/jquery/dist/jquery.js"></script>
     <script src="content/bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="content/js/main.js"></script>
@@ -22,51 +22,54 @@
 <body>
   <header class="header">
       <div class="FAQ1">
-          <span class="glyphicon glyphicon-arrow-left"></span> Выберите карту
+          <span class="glyphicon glyphicon-arrow-left"></span> Оберіть середовище
       </div>
       <div class="FAQ2">
-          Выберите алгоритм <span class="glyphicon glyphicon-arrow-right"></span>
+          Оберіть алгоритм <span class="glyphicon glyphicon-arrow-right"></span>
       </div>
       <div class="FAQ3">
           <ul>
-              <li>Нарисуйте карту</li>
-              <li>Виставте количество допустимых шагов(Remaining steps)</li>
-              <li>Нажмите Drop garbage</li>
-              <li>Нажмите Start</li>
+              <li>Намалюйте карту</li>
+              <li>Виставте кількість допустимих кроків</li>
+              <li>Натисність 'Засмітити приміщення'</li>
+              <li>Натисність 'Старт'</li>
           </ul>
       </div>
       <div class="btn-group buttonsNav">
-          <button class="btn btn-primary btn-start btn-nav">Start</button>
-          <button class="btn btn-primary btn-stop btn-nav">Pause</button>
-          <button class="btn btn-primary btn-retry btn-nav">Retry</button>
+          <button class="btn btn-primary btn-start btn-nav">Старт</button>
+          <button class="btn btn-primary btn-stop btn-nav">Зупинити</button>
+          <button class="btn btn-primary btn-retry btn-nav">Перезавантажити</button>
           <div class="btn-group">
-              <button class="btn btn-info btn-dropGarb">Drop garbage</button>
+              <button class="btn btn-info btn-dropGarb">Засмітити приміщення</button>
           </div>
       </div>
       <div class="btn-group chooseAlgorithm1">
-          <button class="btn btn-default algo1 algoo1" data-algo="algo1">Последовательно</button>
-          <button class="btn btn-default algo2 algoo1" data-algo="algo2">Поиск мусора</button>
-          <button class="btn btn-default algo3 algoo1" data-algo="algo3">Случайный</button>
+          <button class="btn btn-default algo1 algoo1" data-algo="algo1">Послідовний</button>
+          <button class="btn btn-default algo2 algoo1" data-algo="algo2">Пошук сміття</button>
+          <button class="btn btn-default algo3 algoo1" data-algo="algo3">Випадковий</button>
       </div>
       <div class="btn-group chooseAlgorithm2">
-          <button class="btn btn-default algo4 algoo2" data-algo="algo4">Рефлексный</button>
-          <button class="btn btn-default algo5 algoo2" id="vpm" data-algo="algo5" data-toggle="tooltip" data-placement="right" data-original-title="Внутреннее представление мира">ВПМ</button>
+          <button class="btn btn-default algo4 algoo2" data-algo="algo4">Рефлексний</button>
+          <button class="btn btn-default algo5 algoo2" id="vpm" data-algo="algo5" data-toggle="tooltip" data-placement="right" data-original-title="Внутрішнє представлення світу">ВПС</button>
       </div>
       <div class="list-group chooseMap">
-          <a href="#" class="list-group-item" id="map1" data-stem="map1"> Map 1</a>
-          <a href="#" class="list-group-item" id="map2" data-stem="map2"> Map 2</a>
+          <a href="#" class="list-group-item" id="map1" data-stem="map1"> Статичне </a>
+          <a href="#" class="list-group-item" id="map2" data-stem="map2"> Динамічне </a>
       </div>
 
       <div class="info alert alert-info">
           <span>
-              <span class="infoSpan gargabeNum">Number of garbage: <span id="numOfGarbage"></span></span>
-              <span class="infoSpan stepsNum">Remaining steps: <input type="number" class="stepsInput"></span>
-              <span class="infoSpan dirtyDegree">Ave Dirty Degree: <span id="dirtyDegree"></span></span>
+              <span class="infoSpan gargabeNum">Кількість сміття: <span id="numOfGarbage"></span></span>
+              <span class="infoSpan stepsNum">Кількість кроків: <input type="number" class="stepsInput"></span>
+              <span class="infoSpan dirtyDegree">Середній ступінь забрудненості: <span id="dirtyDegree"></span></span>
           </span>
       </div>
       <div class="alert alert-success finish">
-          Your room is completely clean
+          Ваше приміщення повністю очищене
           <span id="elapsedTime"></span>
+      </div>
+      <div>
+          <a href="content/partials/description.html" target="_blank" class="btn btn-link btn-descript">Опис програми</a>
       </div>
   </header>
   <div class="environment">

@@ -4,11 +4,14 @@
 window.addEventListener("load", function() {
 
 	var buttonsNav = document.getElementsByClassName('buttonsNav')[0];
+	var btnAddGarb = document.getElementsByClassName('btn-dropGarb')[0];
 
 	var chooseAlgo1 = document.getElementsByClassName('chooseAlgorithm1')[0];
 	var algo1Buttons = document.getElementsByClassName('algoo1');
 	var chooseAlgo2 = document.getElementsByClassName('chooseAlgorithm2')[0];
 	var algo2Buttons = document.getElementsByClassName('algoo2');
+
+	var btnDescription = document.getElementsByClassName('btn-descript')[0];
 
 
 	var map1 = document.getElementById('map1');
@@ -33,6 +36,8 @@ window.addEventListener("load", function() {
 				var stem = this.getAttribute('data-stem');
 				var base = 'content/partials/'+stem+'.html';
 
+				btnDescription.style.display = 'none';
+
 				deactiveItems(chooseMapItems);
 
 				this.classList.add('active');
@@ -52,6 +57,8 @@ window.addEventListener("load", function() {
 		buttonsNav.classList.add('open');
 		chooseAlgo2.classList.remove('open');
 		chooseAlgo1.classList.add('open');
+		btnAddGarb.style.display = 'none';
+
 
 		for (var j = 0; j < algo1Buttons.length; ++j) {
 			algo1Buttons[j].addEventListener('click', function() {
@@ -78,7 +85,7 @@ window.addEventListener("load", function() {
 		buttonsNav.classList.add('open');
 		chooseAlgo1.classList.remove('open');
 		chooseAlgo2.classList.add('open');
-
+		btnAddGarb.style.display = 'block';
 		$('#vpm').tooltip();
 
 
